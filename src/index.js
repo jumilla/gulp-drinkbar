@@ -1,8 +1,19 @@
 
-let plugins = {
-	if: require('gulp-if'),
-}
+import gulp from 'gulp'
+import drinkbar from './drinkbar'
 
-module.exports = {
-	plugins: plugins,
-}
+
+
+drinkbar.browserify = require('./browserify')
+
+
+
+gulp.task('watch', () => {
+	for (let task in drinkbar.watches) {
+		gulp.watch(drinkbar.watches[task], [task])
+	}
+})
+
+
+
+module.exports = drinkbar

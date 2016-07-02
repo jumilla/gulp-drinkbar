@@ -1,6 +1,5 @@
 
 import drinkbar from './drinkbar'
-import browserify from 'browserify'
 import path from 'path'
 
 /**
@@ -13,12 +12,9 @@ module.exports = function($, builder, parameters = {}) {
 	let inputPathes = parameters.inputs || [parameters.input]
 	let outputDirectory = path.dirname(parameters.output)
 	let outputFileTitle = path.basename(parameters.output)
-	let options = parameters.options || {}
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		return browserify(inputPathes, options)
-			.transform('babelify', {presets: 'es2015'})
-			.bundle()
+		return $.gulp.src(inputPathes)
 			.on('error', function (err) {
 				$.notify.onError({
 					title: 'Gulp compile failed',
@@ -28,8 +24,6 @@ module.exports = function($, builder, parameters = {}) {
 
 				this.emit('end')
 			})
-			.pipe($.source(outputFileTitle))
-			.pipe($.buffer())
 			.pipe($.notify({
 				title: 'Gulp compile success!',
 				message: '<%= file.relative %>',

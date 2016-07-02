@@ -46,6 +46,9 @@ const config = {
 	production: env.inProduction,
 
 	css: {
+		minifier: {
+			options: {},
+		}
 	},
 
 	js: {
@@ -59,17 +62,6 @@ plugins.config = config
 
 
 
-class TaskBuilder {
-	constructor(name) {
-		this.name = name
-	}
-
-	watch(patters) {
-		drinkbar.watches[this.name] = patterns
-	}
-}
-
-
 
 const drinkbar = {
 	config: config,
@@ -77,13 +69,29 @@ const drinkbar = {
 	plugins: plugins,
 
 	watches: {},
-
-	task: (name, callback) => {
-		gulp.task(name, callback())
-
-		return new TaskBuilder(name)
-	},
 }
+
+
+
+drinkbar.TaskBuilder = function (task, dependentTasks) {
+	this.task = task
+	this.dependentTasks = dependentTasks
+}
+
+drinkbar.task = (task, dependentTasks = []) => {
+	return new drinkbar.TaskBuilder(task, dependentTasks)
+}
+
+drinkbar.addBuilder = (method, closure) => {
+	drinkbar.TaskBuilder.prototype[method] = function (...args) {
+		closure.apply(drinkbar.TaskBuilder, [drinkbar.plugins, this].concat(args))
+		return this
+	}
+}
+
+drinkbar.addBuilder('watch', function ($, builder, patterns) {
+	drinkbar.watches[builder.task] = patterns
+})
 
 
 

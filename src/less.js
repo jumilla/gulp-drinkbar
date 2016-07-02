@@ -1,6 +1,5 @@
 
 import drinkbar from './drinkbar'
-import browserify from 'browserify'
 import path from 'path'
 
 /**
@@ -16,18 +15,18 @@ module.exports = function($, builder, parameters = {}) {
 	let options = parameters.options || {}
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		return browserify(inputPathes, options)
-			.transform('babelify', {presets: 'es2015'})
-			.bundle()
-			.on('error', function (err) {
-				$.notify.onError({
-					title: 'Gulp compile failed',
-					message: '<%= error.message %>',
-					onLast: true,
-				})(err)
+		return $.gulp.src(inputPathes)
+			.pipe($.less()
+				.on('error', function (err) {
+					$.notify.onError({
+						title: 'Gulp compile failed',
+						message: '<%= error.message %>',
+						onLast: true,
+					})(err)
 
-				this.emit('end')
-			})
+					this.emit('end')
+				})
+			)
 			.pipe($.source(outputFileTitle))
 			.pipe($.buffer())
 			.pipe($.notify({
@@ -35,7 +34,7 @@ module.exports = function($, builder, parameters = {}) {
 				message: '<%= file.relative %>',
 			}))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.init({ loadMaps: true })))
-			.pipe($.if(config.production, $.uglify(config.js.uglify.options)))
+			.pipe($.if(config.production, $['clean-css'](config.css.minifier.options)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
 	})

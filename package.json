@@ -1,6 +1,6 @@
 {
   "name": "gulp-drinkbar",
-  "version": "0.1.3",
+  "version": "0.2.8",
   "author": {
     "name": "Fumio Furukawa"
   },
@@ -76,8 +76,7 @@
     "test": "npm run build"
   },
   "files": [
-    "lib",
-    "README.md"
+    "lib"
   ],
   "main": "lib/index.js"
 }

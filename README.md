@@ -147,7 +147,7 @@ Define task group.
 
 ```javascript
 drinkbar
-	.task('scripts', ['script:libs', 'script:'app'])
+	.task('scripts', ['script:libs', 'script:app'])
 	.define()
 ```
 

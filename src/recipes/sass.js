@@ -1,5 +1,4 @@
 
-import drinkbar from './drinkbar'
 import path from 'path'
 
 /**
@@ -12,11 +11,11 @@ module.exports = function($, builder, parameters = {}) {
 	let inputPathes = parameters.inputs || [parameters.input]
 	let outputDirectory = path.dirname(parameters.output)
 	let outputFileTitle = path.basename(parameters.output)
-	let options = parameters.options || {}
+	let taskConfig = Object.assign(config.sass, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		return $.gulp.src(inputPathes)
-			.pipe($.less()
+			.pipe($.sass(taskConfig)
 				.on('error', function (err) {
 					$.notify.onError({
 						title: 'Gulp compile failed',
@@ -34,7 +33,7 @@ module.exports = function($, builder, parameters = {}) {
 				message: '<%= file.relative %>',
 			}))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.init({ loadMaps: true })))
-			.pipe($.if(config.production, $['clean-css'](config.css.minifier.options)))
+			.pipe($.if(config.production, $['clean-css'](config.css.minifier)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
 	})

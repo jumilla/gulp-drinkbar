@@ -1,5 +1,4 @@
 
-import drinkbar from './drinkbar'
 import path from 'path'
 
 /**

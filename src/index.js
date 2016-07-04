@@ -7,12 +7,12 @@ import drinkbar from './drinkbar'
 drinkbar.addBuilder('define', ($, builder) => {
 	$.gulp.task(builder.task, builder.dependentTasks, () => {})
 })
-drinkbar.addBuilder('styles', require('./styles'))
-drinkbar.addBuilder('sass', require('./sass'))
-drinkbar.addBuilder('less', require('./less'))
-drinkbar.addBuilder('scripts', require('./scripts'))
-drinkbar.addBuilder('browserify', require('./browserify'))
-drinkbar.addBuilder('erase', require('./erase'))
+drinkbar.addBuilder('styles', require('./recipes/styles'))
+drinkbar.addBuilder('sass', require('./recipes/sass'))
+drinkbar.addBuilder('less', require('./recipes/less'))
+drinkbar.addBuilder('scripts', require('./recipes/scripts'))
+drinkbar.addBuilder('browserify', require('./recipes/browserify'))
+drinkbar.addBuilder('erase', require('./recipes/erase'))
 
 
 

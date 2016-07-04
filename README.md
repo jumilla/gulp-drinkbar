@@ -3,7 +3,7 @@
 ## overview
 
 
-```
+```javascript
 var drinkbar = require('gulp-drinkbar')
 
 drinkbar
@@ -29,33 +29,40 @@ drinkbar
 ```
 
 
-## installation
+## Getting Started
 
 ```
 npm install gulp-drinkbar --save-dev
 ```
 
-## commands
+## Commands
 
 ### `gulp`
 
-.cssと.jsを生成するタスクでは、sourcemapも生成します。
+`.css`と`.js`を生成するタスクでは、sourcemapも生成します。
+`gulp` command generates sourcemap when the task includes compiling .css and/or .js file.
+
 
 ### `gulp --production`
 
 `default`タスクを実行します。
+it runs default task
 
 .cssを生成するタスクでは、minifyを実行します。
+it runs minify files when the task includes compiling .css file.
 
 .jsを生成するタスクでは、uglifyを実行します。
+it runs uglify files when the task includes compiling .js file
 
 ### `gulp <task>`
 
 指定したgulpタスクを実行します。
+it runs specific task
 
 ### `gulp watch`
 
 タスクに指定されたファイルパターンを監視し、変更を検知した時点でタスクを実行します。
+watch over designated files that you made and run tasks when any change saved.
 
 ## recipes
 
@@ -63,7 +70,7 @@ npm install gulp-drinkbar --save-dev
 
 Combine style sheets.
 
-```
+```javascript
 drinkbar
 	.task('style:app')
 	.styles({
@@ -82,7 +89,7 @@ Pre process sass.
 
 `Compass` is not available.
 
-```
+```javascript
 drinkbar
 	.task('style:app')
 	.sass({
@@ -100,7 +107,7 @@ drinkbar
 
 Combine scripts.
 
-```
+```javascript
 drinkbar
 	.task('script:app')
 	.scripts({
@@ -118,7 +125,7 @@ drinkbar
 
 Combine scripts use `browserify`.
 
-```
+```javascript
 drinkbar
 	.task('script:app')
 	.browserify({
@@ -138,7 +145,7 @@ drinkbar
 
 Define task group.
 
-```
+```javascript
 drinkbar
 	.task('scripts', ['script:libs', 'script:'app'])
 	.define()

@@ -26,8 +26,6 @@ module.exports = function($, builder, parameters = {}) {
 					this.emit('end')
 				})
 			)
-			.pipe($.source(outputFileTitle))
-			.pipe($.buffer())
 			.pipe($.notify({
 				title: 'Gulp compile success!',
 				message: '<%= file.relative %>',

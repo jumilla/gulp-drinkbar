@@ -31,16 +31,19 @@ drinkbar
 
 ## Getting Started
 
+You need to install node ver. 4.4.56(v8) or later
+node ver. 4.4.56(v8)以降の動作環境が必要です。
 ```
 npm install gulp-drinkbar --save-dev
 ```
+
 
 ## Commands
 
 ### `gulp`
 
 `.css`と`.js`を生成するタスクでは、sourcemapも生成します。
-`gulp` command generates sourcemap when the task includes compiling .css and/or .js file.
+if your task includes compiling .css and/or .js file, additional sourcemap will be generated.
 
 
 ### `gulp --production`
@@ -62,13 +65,14 @@ it runs specific task
 ### `gulp watch`
 
 タスクに指定されたファイルパターンを監視し、変更を検知した時点でタスクを実行します。
-watch over designated files that you made and run tasks when any change saved.
+As you write code and modify your files, the `gulp.watch()` method will listen for changes and automatically run designated tasks.
 
 ## recipes
 
 ### styles
 
-Combine style sheets.
+複数のスタイルシートを１つのファイルに生成します。
+Concatenates style sheets and saves the output
 
 ```javascript
 drinkbar
@@ -85,8 +89,10 @@ drinkbar
 
 ### sass
 
-Pre process sass.
 
+Pre-process sass.
+
+コンパスには対応していません。
 `Compass` is not available.
 
 ```javascript
@@ -105,7 +111,8 @@ drinkbar
 
 ### scripts
 
-Combine scripts.
+複数のスクリプトを１つのファイルに生成します。
+Concatenates scripts and saves the output
 
 ```javascript
 drinkbar
@@ -123,6 +130,7 @@ drinkbar
 
 ### browserify
 
+`browserify`を使ってスクリプトを１つのファイルに生成します。
 Combine scripts use `browserify`.
 
 ```javascript
@@ -140,9 +148,17 @@ drinkbar
 ```
 
 ### erase
+指定のフォルダ、ファイルを削除します。
+Erase designated files and/or directories
+```javascript
+drinkbar
+	.task('scripts')
+	.erase('resources/assets/js/app.js')
+```
 
 ### task group
 
+タスクグループの定義の方法
 Define task group.
 
 ```javascript
@@ -156,6 +172,7 @@ drinkbar
 ### drinkbar.task(task : string, dependentTasks : array) : TaskBuilder
 
 ### TaskBuilder#watch(patterns : array) : TaskBuilder
+
 
 ### TaskBuilder#define() : TaskBuilder
 

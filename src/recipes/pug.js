@@ -1,5 +1,4 @@
 
-import pug from 'gulp-pug'
 import util from '../util'
 
 /**
@@ -19,10 +18,11 @@ module.exports = function($, builder, parameters = {}) {
 	let taskConfig = Object.assign(config.pug, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isPluginInstalled('pug', 'gulp-pug')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		return $.gulp.src(inputPaths)
-			.pipe(pug(taskConfig)
+			.pipe($.pug(taskConfig)
 				.on('error', err => {
 					$.notify.onError({
 						title: 'Gulp compile failed',

@@ -1,5 +1,4 @@
 
-import typescript from 'gulp-typescript'
 import util from '../util'
 
 /**
@@ -19,10 +18,11 @@ module.exports = function($, builder, parameters = {}) {
 	let taskConfig = Object.assign(config.typescript, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isPluginInstalled('typescript', 'gulp-typescript')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		return $.gulp.src(inputPaths)
-			.pipe(typescript(taskConfig)
+			.pipe($.typescript(taskConfig)
 				.on('error', err => {
 					$.notify.onError({
 						title: 'Gulp compile failed',

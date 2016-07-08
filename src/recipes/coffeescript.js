@@ -1,5 +1,4 @@
 
-import coffeescript from 'gulp-coffee'
 import util from '../util'
 
 /**
@@ -19,10 +18,11 @@ module.exports = function($, builder, parameters = {}) {
 	let taskConfig = Object.assign(config.coffeescript, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isPluginInstalled('coffeescript', 'gulp-coffeescript')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		return $.gulp.src(inputPaths)
-			.pipe(coffeescript(taskConfig)
+			.pipe($.coffeescript(taskConfig)
 				.on('error', err => {
 					$.notify.onError({
 						title: 'Gulp compile failed',

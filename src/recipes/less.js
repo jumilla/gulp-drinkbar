@@ -18,6 +18,7 @@ module.exports = function($, builder, parameters = {}) {
 	let taskConfig = Object.assign(config.less, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isPluginInstalled('less', 'gulp-less')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		return $.gulp.src(inputPaths)

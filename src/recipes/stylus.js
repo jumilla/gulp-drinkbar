@@ -1,5 +1,4 @@
 
-import stylus from 'gulp-stylus'
 import util from '../util'
 
 /**
@@ -19,10 +18,11 @@ module.exports = function($, builder, parameters = {}) {
 	let taskConfig = Object.assign(config.stylus, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isPluginInstalled('stylus', 'gulp-stylus')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		return $.gulp.src(inputPaths)
-			.pipe(stylus(taskConfig)
+			.pipe($.stylus(taskConfig)
 				.on('error', err => {
 					$.notify.onError({
 						title: 'Gulp compile failed',
@@ -37,6 +37,7 @@ module.exports = function($, builder, parameters = {}) {
 				title: 'Gulp compile success!',
 				message: '<%= file.relative %>',
 			}))
+//			.pipe($.rename(outputFileTitle))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.init({ loadMaps: true })))
 			.pipe($.if(config.production, $['clean-css'](config.css.minifier)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))

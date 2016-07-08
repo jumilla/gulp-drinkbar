@@ -11,10 +11,10 @@ import util from '../util'
  */
 module.exports = function($, builder, parameters = {}) {
 	let config = $.config
-	let inputPaths = parameters.inputs || [parameters.input]
+	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = $.path.dirname(parameters.output)
 	let outputFileTitle = $.path.basename(parameters.output)
-	let cleanPaths = parameters.cleans || [parameters.clean]
+	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPaths)) return
@@ -40,7 +40,7 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', () => {
-				$.del(cleanPaths)
+				$.del.sync(cleanPaths)
 			})
 	})
 }

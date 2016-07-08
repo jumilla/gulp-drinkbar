@@ -89,6 +89,76 @@ drinkbar
 	.watch('resources/assets/css/**/*.css')
 ```
 
+ファイルパターンでも指定できます。
+
+```javascript
+drinkbar
+	.task('style:app')
+	.styles({
+		inputs: [
+			'resources/assets/css/*.css',
+		],
+		output: 'public/assets/app.css',
+	})
+	.watch('resources/assets/css/**/*.css')
+```
+
+### scripts
+
+複数のスクリプトを１つのファイルに生成します。
+Concatenates scripts and saves the output
+
+```javascript
+drinkbar
+	.task('script:app')
+	.scripts({
+		inputs: [
+			'resources/assets/js/jquery.js',
+			'resources/assets/js/bootstrap.js',
+			'resources/assets/js/app.js',
+		],
+		output: 'public/assets/app.js',
+	})
+	.watch('resources/assets/js/**/*.js')
+```
+
+ファイルパターンでも指定できます。
+
+```javascript
+drinkbar
+	.task('script:app')
+	.scripts({
+		inputs: [
+			'resources/assets/js/*.js',
+		],
+		output: 'public/assets/app.js',
+	})
+	.watch('resources/assets/js/**/*.js')
+```
+
+### browserify
+
+`browserify`を使ってスクリプトを１つのファイルに生成します。
+Combine scripts use `browserify`.
+
+```javascript
+drinkbar
+	.task('script:app')
+	.browserify({
+		inputs: [
+			'resources/assets/js/app.js',
+		],
+		output: 'public/assets/app.js',
+		config: {
+		},
+	})
+	.watch('resources/assets/js/**/*.js')
+```
+
+### pug
+
+### stylus
+
 ### sass
 
 Pre-process sass.
@@ -128,43 +198,9 @@ drinkbar
 	.watch('resources/assets/less/**/*.less')
 ```
 
-### scripts
+### coffeescript
 
-複数のスクリプトを１つのファイルに生成します。
-Concatenates scripts and saves the output
-
-```javascript
-drinkbar
-	.task('script:app')
-	.scripts({
-		inputs: [
-			'resources/assets/js/jquery.js',
-			'resources/assets/js/bootstrap.js',
-			'resources/assets/js/app.js',
-		],
-		output: 'public/assets/app.js',
-	})
-	.watch('resources/assets/js/**/*.js')
-```
-
-### browserify
-
-`browserify`を使ってスクリプトを１つのファイルに生成します。
-Combine scripts use `browserify`.
-
-```javascript
-drinkbar
-	.task('script:app')
-	.browserify({
-		inputs: [
-			'resources/assets/js/app.js',
-		],
-		output: 'public/assets/app.js',
-		config: {
-		},
-	})
-	.watch('resources/assets/js/**/*.js')
-```
+### typescript
 
 ### erase
 
@@ -188,12 +224,28 @@ drinkbar
 	.define()
 ```
 
+## 入力ファイルの指定方法
+
+input, inputs,
+ファイルパターン、グロブ
+
+
 ## methods
 
 ### drinkbar.task(task : string, dependentTasks : array) : TaskBuilder
 
-### TaskBuilder#watch(patterns : array) : TaskBuilder
-
+### TaskBuilder#{recipe}() : TaskBuilder
 
 ### TaskBuilder#define() : TaskBuilder
+
+空のタスクを作成します。
+
+`drinkbar.task()` に依存タスクが指定されている場合、
+
+### TaskBuilder#before(callback : function) : TaskBuilder
+
+### TaskBuilder#after(callback : function) : TaskBuilder
+
+### TaskBuilder#watch(patterns : array) : TaskBuilder
+
 

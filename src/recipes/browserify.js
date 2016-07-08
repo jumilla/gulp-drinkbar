@@ -1,24 +1,26 @@
 
 import browserify from 'browserify'
-import path from 'path'
 import util from '../util'
 
 /**
  * parameters
  *     .inputs : array
+ *     .input  : string
  *     .output : string
+ *     .cleans : array
+ *     .clean  : string
  */
 module.exports = function($, builder, parameters = {}) {
 	let config = $.config
 	let inputPathes = parameters.inputs || [parameters.input]
-	let outputDirectory = path.dirname(parameters.output)
-	let outputFileTitle = path.basename(parameters.output)
+	let outputDirectory = $.path.dirname(parameters.output)
+	let outputFileTitle = $.path.basename(parameters.output)
 	let taskConfig = Object.assign(config.browserify, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPathes)) return
 
-		return browserify(inputPathes, taskConfig)
+		let result = browserify(inputPathes, taskConfig)
 			.transform('babelify', {presets: 'es2015'})
 			.bundle()
 			.on('error', function (err) {
@@ -40,5 +42,9 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.if(config.production, $.uglify(config.js.uglify)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
+
+		$.del(cleanPaths)
+
+		return result
 	})
 }

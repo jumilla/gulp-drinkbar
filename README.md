@@ -12,9 +12,11 @@ drinkbar
 		inputs: [
 			'resources/assets/js/app.js',
 		],
-		output: 'public/assets/app.js',
 		config: {
 		},
+		output: 'public/assets/app.js',
+		cleans: [
+		],
 	})
 	.watch('resources/assets/js/**/*.js')
 
@@ -89,7 +91,6 @@ drinkbar
 
 ### sass
 
-
 Pre-process sass.
 
 コンパスには対応していません。
@@ -107,6 +108,24 @@ drinkbar
 		},
 	})
 	.watch('resources/assets/sass/**/*.scss')
+```
+
+### less
+
+Pre-process less.
+
+```javascript
+drinkbar
+	.task('style:app')
+	.less({
+		inputs: [
+			'resources/assets/less/app.less',
+		],
+		output: 'public/assets/app.css',
+		config: {
+		},
+	})
+	.watch('resources/assets/less/**/*.less')
 ```
 
 ### scripts
@@ -148,8 +167,10 @@ drinkbar
 ```
 
 ### erase
+
 指定のフォルダ、ファイルを削除します。
 Erase designated files and/or directories
+
 ```javascript
 drinkbar
 	.task('scripts')

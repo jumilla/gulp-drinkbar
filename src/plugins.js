@@ -24,6 +24,9 @@ const gulpPlugins = {
 	'map': 'vinyl-map',
 	'paths': 'vinyl-paths',
 	'source': 'vinyl-source-stream',
+
+	'path': 'path',
+	'del': 'del',
 }
 
 const plugins = {}

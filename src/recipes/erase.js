@@ -1,6 +1,6 @@
 
 import del from 'del'
-import path from 'path'
+import util from '../util'
 
 /**
  * parameters
@@ -15,6 +15,8 @@ module.exports = function($, builder, filePatterns) {
 	}
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isValidGlobs(filePatterns)) return
+
 		return del(filePatterns)
 	})
 }

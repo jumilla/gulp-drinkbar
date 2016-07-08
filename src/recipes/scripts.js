@@ -1,5 +1,6 @@
 
 import path from 'path'
+import util from '../util'
 
 /**
  * parameters
@@ -13,6 +14,8 @@ module.exports = function($, builder, parameters = {}) {
 	let outputFileTitle = path.basename(parameters.output)
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isValidGlobs(inputPathes)) return
+
 		return $.gulp.src(inputPathes)
 			.pipe($.concat(outputFileTitle)
 				.on('error', function (err) {

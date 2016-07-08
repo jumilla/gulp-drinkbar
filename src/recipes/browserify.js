@@ -1,6 +1,7 @@
 
 import browserify from 'browserify'
 import path from 'path'
+import util from '../util'
 
 /**
  * parameters
@@ -15,6 +16,8 @@ module.exports = function($, builder, parameters = {}) {
 	let taskConfig = Object.assign(config.browserify, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isValidGlobs(inputPathes)) return
+
 		return browserify(inputPathes, taskConfig)
 			.transform('babelify', {presets: 'es2015'})
 			.bundle()

@@ -1,5 +1,6 @@
 
 import path from 'path'
+import util from '../util'
 
 /**
  * parameters
@@ -14,6 +15,8 @@ module.exports = function($, builder, parameters = {}) {
 	let taskConfig = Object.assign(config.less, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isValidGlobs(inputPathes)) return
+
 		return $.gulp.src(inputPathes)
 			.pipe($.less(taskConfig)
 				.on('error', function (err) {

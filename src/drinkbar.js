@@ -34,6 +34,16 @@ drinkbar.addBuilder = (method, closure) => {
 	}
 }
 
+drinkbar.addBuilder('define', ($, builder) => {
+	$.gulp.task(builder.task, builder.dependentTasks, () => {})
+})
+drinkbar.addBuilder('styles', require('./recipes/styles'))
+drinkbar.addBuilder('sass', require('./recipes/sass'))
+drinkbar.addBuilder('less', require('./recipes/less'))
+drinkbar.addBuilder('scripts', require('./recipes/scripts'))
+drinkbar.addBuilder('browserify', require('./recipes/browserify'))
+drinkbar.addBuilder('erase', require('./recipes/erase'))
+
 drinkbar.addBuilder('watch', function ($, builder, patterns) {
 	drinkbar.watches[builder.task] = patterns
 })

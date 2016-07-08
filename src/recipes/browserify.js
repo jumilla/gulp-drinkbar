@@ -21,6 +21,8 @@ module.exports = function($, builder, parameters = {}) {
 		if (!util.isPluginInstalled('browserify', 'browserify')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
+		builder.trigger('before')
+
 		return $.browserify(inputPaths, taskConfig)
 			.transform('babelify', {presets: 'es2015'})
 			.bundle()
@@ -45,6 +47,8 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', () => {
 				$.del.sync(cleanPaths)
+
+				builder.trigger('after')
 			})
 
 		return result

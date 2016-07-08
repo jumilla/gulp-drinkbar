@@ -19,6 +19,8 @@ module.exports = function($, builder, parameters = {}) {
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPaths)) return
 
+		builder.trigger('before')
+
 		return $.gulp.src(inputPaths)
 			.pipe($.concat(outputFileTitle)
 				.on('error', err => {
@@ -41,6 +43,8 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', () => {
 				$.del.sync(cleanPaths)
+
+				builder.trigger('after')
 			})
 	})
 }

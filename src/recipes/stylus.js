@@ -20,6 +20,8 @@ module.exports = function($, builder, parameters = {}) {
 		if (!util.isPluginInstalled('stylus', 'gulp-stylus')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
+		builder.trigger('before')
+
 		return $.gulp.src(inputPaths)
 			.pipe($.stylus(taskConfig)
 				.on('error', err => {
@@ -42,6 +44,8 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', () => {
 				$.del.sync(cleanPaths)
+
+				builder.trigger('after')
 			})
 
 		return result

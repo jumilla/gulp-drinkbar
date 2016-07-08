@@ -16,6 +16,12 @@ module.exports = function($, builder, filePatterns) {
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(filePatterns)) return
 
-		return $.del(filePatterns)
+		builder.trigger('before')
+
+		let result = $.del.sync(filePatterns)
+
+		builder.trigger('after')
+
+		return result
 	})
 }

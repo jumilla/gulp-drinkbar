@@ -27,6 +27,10 @@ drinkbar
 drinkbar
 	.task('default', ['scripts'])
 	.define()
+	.on('after', function () {
+		drinkbar.notify('Build finished.')
+		drinkbar.log('Build finished.')
+	})
 
 ```
 
@@ -242,10 +246,13 @@ input, inputs,
 
 `drinkbar.task()` に依存タスクが指定されている場合、
 
-### TaskBuilder#before(callback : function) : TaskBuilder
+### TaskBuilder#on('before', callback : function) : TaskBuilder
 
-### TaskBuilder#after(callback : function) : TaskBuilder
+### TaskBuilder#on('after', callback : function) : TaskBuilder
 
 ### TaskBuilder#watch(patterns : array) : TaskBuilder
 
+### drinkbar.notify(message : string, title : string) : void
+
+### drinkbar.log(message : string) : void
 

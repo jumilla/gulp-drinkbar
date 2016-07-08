@@ -20,6 +20,8 @@ module.exports = function($, builder, parameters = {}) {
 		if (!util.isPluginInstalled('coffeescript', 'gulp-coffee')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
+		builder.trigger('before')
+
 		return $.gulp.src(inputPaths)
 			.pipe($.coffeescript(taskConfig)
 				.on('error', err => {
@@ -42,6 +44,8 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', () => {
 				$.del.sync(cleanPaths)
+
+				builder.trigger('after')
 			})
 
 		return result

@@ -1,6 +1,7 @@
 
 import plugins from './plugins'
 import config from './config'
+import notifier from 'node-notifier'
 
 
 
@@ -21,10 +22,37 @@ const drinkbar = {
 drinkbar.TaskBuilder = function (task, dependentTasks) {
 	this.task = task
 	this.dependentTasks = dependentTasks
+	this.handlers = {
+		before: [],
+		after: [],
+	}
 }
 
 drinkbar.task = (task, dependentTasks = []) => {
 	return new drinkbar.TaskBuilder(task, dependentTasks)
+}
+
+drinkbar.TaskBuilder.prototype.on = function (event, closure) {
+	this.handlers[event].push(closure)
+	return this
+}
+
+drinkbar.TaskBuilder.prototype.trigger = function (event, ...args) {
+	this.handlers[event].forEach(closure => {
+		closure(args)
+	})
+	return this
+}
+
+drinkbar.log = message => {
+	plugins.util.log(message)
+}
+
+drinkbar.notify = (message, title = 'Gulp compile success!') => {
+	notifier.notify({
+		title: title,
+		message: message,
+	})
 }
 
 drinkbar.addBuilder = (method, closure) => {
@@ -34,9 +62,17 @@ drinkbar.addBuilder = (method, closure) => {
 	}
 }
 
-drinkbar.addBuilder('define', ($, builder) => {
-	$.gulp.task(builder.task, builder.dependentTasks, () => {})
+drinkbar.addBuilder('define', ($, builder, closure = null) => {
+	if (!closure) {
+		closure = () => {
+			builder.trigger('before')
+			builder.trigger('after')
+		}
+	}
+
+	$.gulp.task(builder.task, builder.dependentTasks, closure)
 })
+
 drinkbar.addBuilder('styles', require('./recipes/styles'))
 drinkbar.addBuilder('scripts', require('./recipes/scripts'))
 drinkbar.addBuilder('browserify', require('./recipes/browserify'))

@@ -18,10 +18,23 @@ module.exports = {
 		},
 	},
 
+	pug: {
+	},
+
+	stylus: {
+	},
+
 	sass: {
 	},
 
 	less: {
+	},
+
+	coffeescript: {
+		bare: true,
+	},
+
+	typescript: {
 	},
 
 	browserify: {

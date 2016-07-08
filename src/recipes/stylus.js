@@ -1,5 +1,5 @@
 
-import coffeescript from 'gulp-coffee'
+import stylus from 'gulp-stylus'
 import util from '../util'
 
 /**
@@ -16,13 +16,13 @@ module.exports = function($, builder, parameters = {}) {
 	let outputDirectory = $.path.dirname(parameters.output)
 	let outputFileTitle = $.path.basename(parameters.output)
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = Object.assign(config.coffeescript, parameters.config || {})
+	let taskConfig = Object.assign(config.stylus, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPaths)) return
 
 		return $.gulp.src(inputPaths)
-			.pipe(coffeescript(taskConfig)
+			.pipe(stylus(taskConfig)
 				.on('error', err => {
 					$.notify.onError({
 						title: 'Gulp compile failed',
@@ -38,7 +38,7 @@ module.exports = function($, builder, parameters = {}) {
 				message: '<%= file.relative %>',
 			}))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.init({ loadMaps: true })))
-			.pipe($.if(config.production, $.uglify(config.js.uglify)))
+			.pipe($.if(config.production, $['clean-css'](config.css.minifier)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', () => {

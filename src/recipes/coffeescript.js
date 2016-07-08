@@ -12,13 +12,12 @@ import util from '../util'
 module.exports = function($, builder, parameters = {}) {
 	let config = $.config
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
-	let outputDirectory = $.path.dirname(parameters.output)
-	let outputFileTitle = $.path.basename(parameters.output)
+	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
 	let taskConfig = Object.assign(config.coffeescript, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		if (!util.isPluginInstalled('coffeescript', 'gulp-coffeescript')) return
+		if (!util.isPluginInstalled('coffeescript', 'gulp-coffee')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		return $.gulp.src(inputPaths)

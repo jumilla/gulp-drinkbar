@@ -7,7 +7,7 @@ import chalk from 'chalk'
 
 
 function isPluginInstalled(name, npmModule) {
-	if (plugins[name] === null) {
+	if (!plugins[name]) {
 		log(chalk.red('Please install npm module "' + npmModule + '".'))
 		log(chalk.yellow('Install command is "npm install ' + npmModule + ' --save-dev"'))
 		return false

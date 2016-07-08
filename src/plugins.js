@@ -36,6 +36,7 @@ const optionalPlugins = {
 	'less': 'gulp-less',
 	'coffeescript': 'gulp-coffee',
 	'typescript': 'gulp-typescript',
+	'riot': 'gulp-riot',
 }
 
 const plugins = {}

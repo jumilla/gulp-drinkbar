@@ -18,6 +18,9 @@ module.exports = {
 		},
 	},
 
+	browserify: {
+	},
+
 	pug: {
 	},
 
@@ -37,7 +40,7 @@ module.exports = {
 	typescript: {
 	},
 
-	browserify: {
+	riot: {
 	},
 }
 

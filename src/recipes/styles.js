@@ -19,9 +19,9 @@ module.exports = function($, builder, parameters = {}) {
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPaths)) return
 
-		let result = $.gulp.src(inputPaths)
+		return $.gulp.src(inputPaths)
 			.pipe($.concat(outputFileTitle)
-				.on('error', function (err) {
+				.on('error', err => {
 					$.notify.onError({
 						title: 'Gulp compile failed',
 						message: '<%= error.message %>',
@@ -39,9 +39,8 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.if(config.production, $['clean-css'](config.css.minifier)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
-
-		$.del(cleanPaths)
-
-		return result
+			.on('end', () => {
+				$.del(cleanPaths)
+			})
 	})
 }

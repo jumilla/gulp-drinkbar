@@ -12,18 +12,19 @@ import util from '../util'
  */
 module.exports = function($, builder, parameters = {}) {
 	let config = $.config
-	let inputPathes = parameters.inputs || [parameters.input]
+	let inputPaths = parameters.inputs || [parameters.input]
 	let outputDirectory = $.path.dirname(parameters.output)
 	let outputFileTitle = $.path.basename(parameters.output)
 	let taskConfig = Object.assign(config.browserify, parameters.config || {})
+	let cleanPaths = parameters.cleans || [parameters.clean]
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		if (!util.isValidGlobs(inputPathes)) return
+		if (!util.isValidGlobs(inputPaths)) return
 
-		let result = browserify(inputPathes, taskConfig)
+		return browserify(inputPaths, taskConfig)
 			.transform('babelify', {presets: 'es2015'})
 			.bundle()
-			.on('error', function (err) {
+			.on('error', err => {
 				$.notify.onError({
 					title: 'Gulp compile failed',
 					message: '<%= error.message %>',
@@ -42,8 +43,9 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.if(config.production, $.uglify(config.js.uglify)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
-
-		$.del(cleanPaths)
+			.on('end', () => {
+				$.del(cleanPaths)
+			})
 
 		return result
 	})

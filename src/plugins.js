@@ -16,6 +16,7 @@ const gulpPlugins = {
 	'sass': 'gulp-sass',
 	'shell': 'gulp-shell',
 	'sourcemaps': 'gulp-sourcemaps',
+	'tap': 'gulp-tap',
 	'uglify': 'gulp-uglify',
 	'util': 'gulp-util',
 	'watch': 'gulp-watch',

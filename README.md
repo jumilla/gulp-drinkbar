@@ -81,12 +81,12 @@ drinkbar
 	.task('style:app')
 	.styles({
 		inputs: [
-			'resources/assets/css/bootstrap.css',
-			'resources/assets/css/app.css',
+			'assets/css/a.css',
+			'assets/css/b.css',
 		],
-		output: 'public/assets/app.css',
+		output: 'results/app.css',
 	})
-	.watch('resources/assets/css/**/*.css')
+	.watch('assets/css/**/*.css')
 ```
 
 ファイルパターンでも指定できます。
@@ -96,11 +96,11 @@ drinkbar
 	.task('style:app')
 	.styles({
 		inputs: [
-			'resources/assets/css/*.css',
+			'assets/css/*.css',
 		],
-		output: 'public/assets/app.css',
+		output: 'results/app.css',
 	})
-	.watch('resources/assets/css/**/*.css')
+	.watch('assets/css/**/*.css')
 ```
 
 ### scripts
@@ -113,13 +113,13 @@ drinkbar
 	.task('script:app')
 	.scripts({
 		inputs: [
-			'resources/assets/js/jquery.js',
-			'resources/assets/js/bootstrap.js',
-			'resources/assets/js/app.js',
+			'assets/js/a.js',
+			'assets/js/b.js',
+			'assets/js/c.js',
 		],
 		output: 'public/assets/app.js',
 	})
-	.watch('resources/assets/js/**/*.js')
+	.watch('assets/js/**/*.js')
 ```
 
 ファイルパターンでも指定できます。
@@ -129,11 +129,11 @@ drinkbar
 	.task('script:app')
 	.scripts({
 		inputs: [
-			'resources/assets/js/*.js',
+			'assets/js/*.js',
 		],
-		output: 'public/assets/app.js',
+		output: 'results/app.js',
 	})
-	.watch('resources/assets/js/**/*.js')
+	.watch('assets/js/**/*.js')
 ```
 
 ### browserify
@@ -146,9 +146,10 @@ drinkbar
 	.task('script:app')
 	.browserify({
 		inputs: [
-			'resources/assets/js/app.js',
+			'assets/browserify/a.js',
+			'assets/browserify/b.js',
 		],
-		output: 'public/assets/app.js',
+		output: 'results/app.js',
 		config: {
 		},
 	})
@@ -156,12 +157,24 @@ drinkbar
 ```
 
 ### pug
-
+Pug (jade) テンプレートをコンパイルします。
+Compile your Pug (or jade) templates into HTML or JS.
+```javascript
+drinkbar
+	.task('pug')
+	.pug({
+		inputs: [
+			'assets/pug/a.jade',
+			'assets/pug/b.jade',
+		],
+		output: 'results/html',
+	})
+```
 ### stylus
 
 ### sass
 
-Pre-process sass.
+sassファイルのコンパイル
 
 コンパスには対応していません。
 `Compass` is not available.
@@ -171,17 +184,18 @@ drinkbar
 	.task('style:app')
 	.sass({
 		inputs: [
-			'resources/assets/sass/app.scss',
+			'assets/sass/app.scss',
 		],
-		output: 'public/assets/app.css',
+		output: 'results/app.css',
 		config: {
 		},
 	})
-	.watch('resources/assets/sass/**/*.scss')
+	.watch('assets/sass/**/*.scss')
 ```
 
 ### less
 
+lessファイルのコンパイル
 Pre-process less.
 
 ```javascript
@@ -189,16 +203,27 @@ drinkbar
 	.task('style:app')
 	.less({
 		inputs: [
-			'resources/assets/less/app.less',
+			'assets/less/app.less',
 		],
-		output: 'public/assets/app.css',
+		output: 'less/app.css',
 		config: {
 		},
 	})
-	.watch('resources/assets/less/**/*.less')
+	.watch('assets/less/**/*.less')
 ```
 
 ### coffeescript
+```javascript
+drinkbar
+	.task('coffeescript')
+	.coffeescript({
+		inputs: [
+			'assets/coffeescript/a.coffee',
+			'assets/coffeescript/b.coffee',
+		],
+		output: 'results/coffeescript',
+	})
+```
 
 ### typescript
 
@@ -226,8 +251,25 @@ drinkbar
 
 ## 入力ファイルの指定方法
 
-input, inputs,
-ファイルパターン、グロブ
+inputとする場合、一つのファイルをタスクに渡すことができます。
+input passes one file to task.
+```javascript
+input: [
+			'assets/test-1/a.css',
+		],
+```
+inputsでは複数ファイルを配列で渡すことができます。
+inputs pass multiple files to task by using array.
+```javascript
+inputs: [
+			'assets/test-1/b.css',
+			'assets/test-1/c.css',
+		],
+```
+ファイルをファイルパターン（グロブ）で指定することも可能です。
+```javascript
+'assets/test-1/**/*.css'
+```
 
 
 ## methods
@@ -247,5 +289,3 @@ input, inputs,
 ### TaskBuilder#after(callback : function) : TaskBuilder
 
 ### TaskBuilder#watch(patterns : array) : TaskBuilder
-
-

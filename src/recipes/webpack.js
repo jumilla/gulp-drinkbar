@@ -13,31 +13,28 @@ import objectAssign from 'object-assign'
 module.exports = function($, builder, parameters = {}) {
 	let config = $.config
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
-	let outputDirectory = $.path.dirname(parameters.output)
-	let outputFileTitle = $.path.basename(parameters.output)
+	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = objectAssign(config.browserify, parameters.config || {})
+	let taskConfig = objectAssign(config.webpack, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		if (!util.isPluginInstalled('browserify', 'browserify')) return
+		if (!util.isPluginInstalled('webpack', 'webpack-stream')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		builder.trigger('before')
 
-		return $.browserify(inputPaths, taskConfig)
-			.transform('babelify', {presets: 'es2015'})
-			.bundle()
-			.on('error', err => {
-				$.notify.onError({
-					title: 'Gulp compile failed',
-					message: '<%= error.message %>',
-					onLast: true,
-				})(err)
+		return $.gulp.src(inputPaths)
+			.pipe($.webpack(taskConfig)
+				.on('error', err => {
+					$.notify.onError({
+						title: 'Gulp compile failed',
+						message: '<%= error.message %>',
+						onLast: true,
+					})(err)
 
-				this.emit('end')
-			})
-			.pipe($.source(outputFileTitle))
-			.pipe($.buffer())
+					this.emit('end')
+				})
+			)
 			.pipe($.notify({
 				title: 'Gulp compile success!',
 				message: '<%= file.relative %>',

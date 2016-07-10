@@ -1,6 +1,7 @@
 
 import plugins from './plugins'
 import config from './config'
+import Location from './location'
 import notifier from 'node-notifier'
 
 
@@ -13,6 +14,12 @@ const drinkbar = {
 	config: config,
 
 	plugins: plugins,
+
+	location(dir) {
+		return new Location(dir)
+	},
+
+	tasks: {},
 
 	watches: {},
 }
@@ -29,7 +36,11 @@ drinkbar.TaskBuilder = function (task, dependentTasks) {
 }
 
 drinkbar.task = (task, dependentTasks = []) => {
-	return new drinkbar.TaskBuilder(task, dependentTasks)
+	let builder =  new drinkbar.TaskBuilder(task, dependentTasks)
+
+	drinkbar.tasks[task] = builder
+
+	return builder
 }
 
 drinkbar.TaskBuilder.prototype.on = function (event, closure) {
@@ -76,13 +87,16 @@ drinkbar.addBuilder('define', ($, builder, closure = null) => {
 drinkbar.addBuilder('styles', require('./recipes/styles'))
 drinkbar.addBuilder('scripts', require('./recipes/scripts'))
 drinkbar.addBuilder('browserify', require('./recipes/browserify'))
+drinkbar.addBuilder('webpack', require('./recipes/webpack'))
 drinkbar.addBuilder('pug', require('./recipes/pug'))
 drinkbar.addBuilder('stylus', require('./recipes/stylus'))
 drinkbar.addBuilder('sass', require('./recipes/sass'))
 drinkbar.addBuilder('less', require('./recipes/less'))
+drinkbar.addBuilder('babel', require('./recipes/babel'))
 drinkbar.addBuilder('coffeescript', require('./recipes/coffeescript'))
 drinkbar.addBuilder('typescript', require('./recipes/typescript'))
 drinkbar.addBuilder('riot', require('./recipes/riot'))
+drinkbar.addBuilder('copy', require('./recipes/copy'))
 drinkbar.addBuilder('erase', require('./recipes/erase'))
 
 drinkbar.addBuilder('watch', function ($, builder, patterns) {

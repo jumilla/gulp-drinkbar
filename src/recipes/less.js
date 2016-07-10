@@ -1,5 +1,6 @@
 
 import util from '../util'
+import objectAssign from 'object-assign'
 
 /**
  * parameters
@@ -14,7 +15,7 @@ module.exports = function($, builder, parameters = {}) {
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = Object.assign(config.less, parameters.config || {})
+	let taskConfig = objectAssign(config.less, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isPluginInstalled('less', 'gulp-less')) return

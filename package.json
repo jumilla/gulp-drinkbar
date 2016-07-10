@@ -1,6 +1,6 @@
 {
   "name": "gulp-drinkbar",
-  "version": "0.6.6",
+  "version": "0.6.7",
   "author": {
     "name": "Fumio Furukawa"
   },
@@ -8,7 +8,7 @@
   "keywords": [
     "gulp"
   ],
-  "description": "Gulp drink server",
+  "description": "Simple task runner based on Gulp.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jumilla/gulp-drinkbar.git"

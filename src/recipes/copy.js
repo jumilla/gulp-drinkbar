@@ -13,7 +13,7 @@ module.exports = function($, builder, filePatterns) {
 
 		builder.trigger('before')
 
-		let result = $.del.sync(filePatterns)
+		// TODO
 
 		builder.trigger('after')
 

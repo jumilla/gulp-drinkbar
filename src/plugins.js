@@ -30,6 +30,7 @@ const requirePlugins = {
 
 const optionalPlugins = {
 	'browserify': 'browserify',
+	'webpack': 'webpack-stream',
 	'pug': 'gulp-pug',
 	'stylus': 'gulp-stylus',
 	'sass': 'gulp-sass',

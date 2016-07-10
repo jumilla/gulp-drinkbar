@@ -21,6 +21,9 @@ module.exports = {
 	browserify: {
 	},
 
+	webpack: {
+	},
+
 	pug: {
 	},
 
@@ -31,6 +34,9 @@ module.exports = {
 	},
 
 	less: {
+	},
+
+	babel: {
 	},
 
 	coffeescript: {

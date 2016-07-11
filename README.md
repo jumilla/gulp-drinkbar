@@ -1,8 +1,9 @@
 # gulp-drinkbar
 
-## overview
+## Overview
 
 gulp-drinkbarは、Gulpタスクをシンプルに見やすく記述できます。
+gulp-drinkbar helps write gulp tasks more simple and easier to read.
 
 ```javascript
 var drinkbar = require('gulp-drinkbar')
@@ -36,7 +37,7 @@ drinkbar
 
 ## Getting Started
 
-You need to install node.js v0.12 or later
+gulp-drinkbar requires of installation of node.js v0.12 or later
 node.js v0.12以降の動作環境が必要です。
 
 ```
@@ -47,28 +48,29 @@ npm install gulp-drinkbar --save-dev
 ## Commands
 
 使い慣れている `gulp` コマンドをそのまま使用します。
+gulp commands are used in gulp-drinkbar
 
 ### `gulp`
 
 `.css`と`.js`を生成するタスクでは、sourcemapも生成します。
-if your task includes compiling .css and/or .js file, additional sourcemap will be generated.
+Additional sourcemap will be generated if your task includes compiling .css and/or .js file, a
 
 
 ### `gulp --production`
 
 `default`タスクを実行します。
-it runs default task
+It runs default task
 
 .cssを生成するタスクでは、minifyを実行します。
-it runs minify files when the task includes compiling .css file.
+It runs minify files when the task includes compiling .css file.
 
 .jsを生成するタスクでは、uglifyを実行します。
-it runs uglify files when the task includes compiling .js file
+It runs uglify files when the task includes compiling .js file
 
 ### `gulp <task>`
 
 指定したgulpタスクを実行します。
-it runs specific task
+It runs specific task
 
 ### `gulp watch`
 
@@ -77,9 +79,10 @@ As you write code and modify your files, the `gulp.watch()` method will listen f
 
 
 
-## Task definition
+## Task Definition
 
 Gulpタスクは `gulpfile.js` に記述します。
+Your gulp tasks are written in `gulpfile.js`
 
 ```javascript
 
@@ -93,7 +96,18 @@ drinkbar
 `.recipe()` には、後述するレシピ関数を指定します。
 レシピ関数にはオブジェクト形式でパラメーターを指定できます。
 
+You can put designated functions (described in the recipe section below) in `.recipe()` block. 
+
 ES2015で記述したい場合は、`.babelrc` ファイルを用意し、`gulpfile.js` ではなく `gulpfile.babel.js` というファイル名にします。
+
+If you write task by using ES2015, it needs to be written in `.babelrc` file. And rename the `gulpfile.js`. file to `gulpfile.bable.js`
+
+####bablerc
+```json
+{
+  "presets": ["es2015"]
+}
+```
 
 ```javascript
 
@@ -103,13 +117,16 @@ drinkbar
 	.task(***taskname***)
 	.***recipe***({})
 ```
+| (need this?)
 
-### 入力ファイルの指定方法
+###Passing File Path
+ 入力ファイルの指定方法
 
 レシピ関数のパラメーターに入力ファイルパスを指定する方法は2つあります。
+You can pass file paths to parameter in two ways.
 
 単一ファイルパスもしくはファイルパターンを指定するには、.inputを使います。
-.input passes one file to task.
+To pass one file or file pattern to task, use `input:`.
 
 ```javascript
 {
@@ -118,7 +135,7 @@ drinkbar
 ```
 
 複数ファイルパスもしくはファイルパターンを指定するには、.inputsを使います。
-.inputs pass multiple files to task by using array.
+To pass multiple files or file patterns, use `inputs:`.
 
 ```javascript
 {
@@ -130,6 +147,7 @@ drinkbar
 ```
  
 ファイルをファイルパターン（Glob形式）で指定することもできます。
+Wildcard (Glob) can be used to specify file pattern.
 
 ```javascript
 {
@@ -139,10 +157,10 @@ drinkbar
 }
 ```
 
-### task group
+### Task Group
 
 タスクグループの定義の方法
-Define task group.
+To define task group.
 
 ```javascript
 drinkbar
@@ -154,11 +172,16 @@ drinkbar
 
 指定したgulpタスクで行わせるよくある処理を関数化したものを、レシピと呼んでいます。
 
+Recipes are functions that includes gulp tasks used frequently. 
+
 レシピには、指定したソースファイルリストの一つ一つに対して処理を行わせる「変換レシピ」と、指定したソースファイルリストから一つのファイルを生成する「結合レシピ」があります。
+
+Recipes include "compiling" which compile selected file and "concatenating" files.
 
 ### copy
 
 ファイルを単純にコピーするレシピです。
+To copy file.
 
 ```javascript
 drinkbar
@@ -173,15 +196,16 @@ drinkbar
 	.watch('resources/assets/*/bootstrap.*')
 ```
 
-- Recipe Type: 変換レシピ
+- Recipe Type: 変換レシピ (compiling)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト
-  - output: 出力先ディレクトリパス
+  - inputs/input: 入力ファイルパスリスト (list of input directory path(s))
+  - output: 出力先ディレクトリパス (output directory)
   - config: 設定
 
 ### pug (jade)
 
 pug (jade)ファイルをビルドするレシピです。
+To compile pug (jade) file.
 
 ```javascript
 drinkbar
@@ -195,15 +219,16 @@ drinkbar
 	.watch('src/**/*.+(pug|jade)')
 ```
 
-- Recipe Type: 変換レシピ
+- Recipe Type: 変換レシピ (compiling)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト
-  - output: 出力先ディレクトリパス
+  - inputs/input: 入力ファイルパスリスト (list of input path(s))
+  - output: 出力先ディレクトリパス (output directory)
   - config: 設定
 
 ### stylus
 
 Stylusファイルをビルドするレシピです。
+To compile stylus file.
 
 ```javascript
 drinkbar
@@ -217,16 +242,16 @@ drinkbar
 	.watch('src/**/*.styl')
 ```
 
-- Recipe Type: 変換レシピ
+- Recipe Type: 変換レシピ (compiling)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト
-  - output: 出力先ディレクトリパス
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
   - config: 設定
 
-### sass
+### Sass
 
-sasssファイルのコンパイル
-Pre-process sass.
+Sasssファイルのコンパイル
+To complie Sass file.
 
 `Compass` には対応していません。
 `Compass` is not available.
@@ -244,11 +269,16 @@ drinkbar
 	})
 	.watch('resources/assets/sass/**/*.scss')
 ```
+- Recipe Type: 変換レシピ (compiling)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 
 ### less
 
 lessファイルのコンパイル
-Pre-process less.
+To compile less file.
 
 ```javascript
 drinkbar
@@ -263,23 +293,105 @@ drinkbar
 	})
 	.watch('resources/assets/less/**/*.less')
 ```
+- Recipe Type: 変換レシピ (compiling)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 
 ### babel
-
+babelファイルのコンパイル
+To compile bable file.
+```javascript
+.babel({
+		inputs: [
+			'assets/test-6/a.es6',
+		],
+		output: 'results/test-6',
+	})
+```
+- Recipe Type: 変換レシピ (compiling)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 ### coffeescript
+To compile coffeescript file
+```javascript
+.coffeescript({
+		inputs: [
+			'assets/test-7/a.coffee',
+			'assets/test-7/b.coffee',
+		],
+		output: 'results/test-7',
+	})
+```
+- Recipe Type: 変換レシピ (compiling)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 
 ### typescript
-
+To compile typescript file
+```javascript
+.typescript({
+		inputs: [
+			'assets/test-8/a.ts',
+			'assets/test-8/b.ts',
+		],
+		output: 'results/test-8',
+	})
+```
+- Recipe Type: 変換レシピ (compiling)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 ### json5
+To compile jason5 file
 
+```javascript
+.json5({
+		input: 'assets/test-14/config.json5',
+		output: 'results/test-14',
+	})
+```
+- Recipe Type: 変換レシピ (compiling)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 ### cson
-
+To compile cson file.
+```javascript
+.cson({
+		input: 'assets/test-15/config.cson',
+		output: 'results/test-15',
+	})
+```
+- Recipe Type: 変換レシピ (compiling)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 ### yaml
-
+To compile yaml file.
+```javascript
+.yaml({
+		input: 'assets/test-16/config.yaml',
+		output: 'results/test-16',
+	})
+```
+- Recipe Type: 変換レシピ (compiling)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 ### styles
 
 複数のスタイルシートを １つのファイルに生成します。
-Concatenates style sheets and saves the output.
+To concatenates style sheets and saves the output.
 
 ```javascript
 drinkbar
@@ -293,26 +405,16 @@ drinkbar
 	})
 	.watch('resources/assets/css/**/*.css')
 ```
-
-ファイルパターン (Glob) でも指定できます。
-Can file pattern (Glob) specified.
-
-```javascript
-drinkbar
-	.task('style:app')
-	.styles({
-		inputs: [
-			'resources/assets/css/*.css',
-		],
-		output: 'public/assets/app.css',
-	})
-	.watch('resources/assets/css/**/*.css')
-```
+- Recipe Type: 結合レシピ (concatenating)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 
 ### scripts
 
 複数のスクリプトを１つのファイルに生成します。
-Concatenates scripts and saves the output
+To concatenates scripts and saves the output
 
 ```javascript
 drinkbar
@@ -327,25 +429,16 @@ drinkbar
 	})
 	.watch('resources/assets/js/**/*.js')
 ```
-
-ファイルパターンでも指定できます。
-
-```javascript
-drinkbar
-	.task('script:app')
-	.scripts({
-		inputs: [
-			'resources/assets/js/*.js',
-		],
-		output: 'public/assets/app.js',
-	})
-	.watch('resources/assets/js/**/*.js')
-```
+- Recipe Type: 結合レシピ (concatenating)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 
 ### browserify
 
 `browserify`を使ってスクリプトを１つのファイルに生成します。
-Combine scripts use `browserify`.
+To combine scripts into one by using `browserify`.
 
 ```javascript
 drinkbar
@@ -360,18 +453,22 @@ drinkbar
 	})
 	.watch('resources/assets/js/**/*.js')
 ```
+- Recipe Type: 結合レシピ (concatenating)
+- Parameters:
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - output: 出力先ディレクトリパス (output directory)
+  - config: 設定
 
 ### erase
 
 指定のフォルダ、ファイルを削除します。
-Erase designated files and/or directories
+To erase designated files and/or directories
 
 ```javascript
 drinkbar
 	.task('scripts')
 	.erase('resources/assets/js/app.js')
 ```
-
 ## Methods
 
 ### drinkbar.task(task : string, dependentTasks : array) : TaskBuilder

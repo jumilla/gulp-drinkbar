@@ -34,11 +34,11 @@ drinkbar
 
 ```
 
-
 ## Getting Started
 
-You need to install node ver. 4.4.56(v8) or later
-node ver. 4.4.56(v8)以降の動作環境が必要です。
+You need to install node.js v0.12 or later
+node.js v0.12以降の動作環境が必要です。
+
 ```
 npm install gulp-drinkbar --save-dev
 ```
@@ -77,8 +77,8 @@ As you write code and modify your files, the `gulp.watch()` method will listen f
 
 ### styles
 
-複数のスタイルシートを１つのファイルに生成します。
-Concatenates style sheets and saves the output
+複数のスタイルシートを １つのファイルに生成します。
+Concatenates style sheets and saves the output.
 
 ```javascript
 drinkbar
@@ -93,7 +93,8 @@ drinkbar
 	.watch('resources/assets/css/**/*.css')
 ```
 
-ファイルパターンでも指定できます。
+ファイルパターン (Glob) でも指定できます。
+Can file pattern (Glob) specified.
 
 ```javascript
 drinkbar

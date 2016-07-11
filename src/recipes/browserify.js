@@ -26,7 +26,7 @@ module.exports = function($, builder, parameters = {}) {
 		builder.trigger('before')
 
 		return $.browserify(inputPaths, taskConfig)
-			.transform('babelify', taskConfig.babelify)
+			.transform($.babelify, taskConfig.babelify)
 			.bundle()
 			.on('error', function (err) {
 				$.notify.onError({

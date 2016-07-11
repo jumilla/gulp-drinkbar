@@ -4,15 +4,11 @@ const requirePlugins = {
 
 	'autoprefixer': 'gulp-autoprefixer',
 	'babel': 'gulp-babel',
-//	'batch': 'gulp-batch',
 	'clean-css': 'gulp-clean-css',
 	'concat': 'gulp-concat',
 	'if': 'gulp-if',
 	'notify': 'gulp-notify',
 	'rename': 'gulp-rename',
-//	'rev': 'gulp-rev',
-//	'rev-replace': 'gulp-rev-replace',
-//	'shell': 'gulp-shell',
 	'sourcemaps': 'gulp-sourcemaps',
 	'tap': 'gulp-tap',
 	'uglify': 'gulp-uglify',
@@ -29,8 +25,6 @@ const requirePlugins = {
 }
 
 const optionalPlugins = {
-	'browserify': 'browserify',
-	'webpack': 'webpack-stream',
 	'pug': 'gulp-pug',
 	'stylus': 'gulp-stylus',
 	'sass': 'gulp-sass',
@@ -41,6 +35,9 @@ const optionalPlugins = {
 	'json5': './streams/json5',
 	'cson': './streams/cson',
 	'yaml': './streams/yaml',
+	'browserify': 'browserify',
+	'babelify': 'babelify',
+	'webpack': 'webpack-stream',
 }
 
 const plugins = {}

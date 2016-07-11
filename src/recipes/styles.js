@@ -23,7 +23,7 @@ module.exports = function($, builder, parameters = {}) {
 
 		return $.gulp.src(inputPaths)
 			.pipe($.concat(outputFileTitle)
-				.on('error', err => {
+				.on('error', function (err) {
 					$.notify.onError({
 						title: 'Gulp compile failed',
 						message: '<%= error.message %>',
@@ -41,7 +41,7 @@ module.exports = function($, builder, parameters = {}) {
 			.pipe($.if(config.production, $['clean-css'](config.css.minifier)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
-			.on('end', () => {
+			.on('end', function () {
 				$.del.sync(cleanPaths)
 
 				builder.trigger('after')

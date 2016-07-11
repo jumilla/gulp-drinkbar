@@ -18,12 +18,6 @@ module.exports = {
 		},
 	},
 
-	browserify: {
-	},
-
-	webpack: {
-	},
-
 	pug: {
 	},
 
@@ -47,6 +41,22 @@ module.exports = {
 	},
 
 	riot: {
+	},
+
+	browserify: {
+		babelify: {presets: 'es2015'},
+	},
+
+	webpack: {
+	},
+
+	json5: {
+	},
+
+	cson: {
+	},
+
+	yaml: {
 	},
 }
 

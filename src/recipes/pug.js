@@ -15,7 +15,7 @@ module.exports = function($, builder, parameters = {}) {
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = objectAssign(config.pug, parameters.config || {})
+	let taskConfig = objectAssign({}, config.pug, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isPluginInstalled('pug', 'gulp-pug')) return
@@ -25,7 +25,7 @@ module.exports = function($, builder, parameters = {}) {
 
 		return $.gulp.src(inputPaths)
 			.pipe($.pug(taskConfig)
-				.on('error', err => {
+				.on('error', function (err) {
 					$.notify.onError({
 						title: 'Gulp compile failed',
 						message: '<%= error.message %>',
@@ -40,7 +40,7 @@ module.exports = function($, builder, parameters = {}) {
 				message: '<%= file.relative %>',
 			}))
 			.pipe($.gulp.dest(outputDirectory))
-			.on('end', () => {
+			.on('end', function () {
 				$.del.sync(cleanPaths)
 
 				builder.trigger('after')

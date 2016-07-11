@@ -13,23 +13,18 @@ import objectAssign from 'object-assign'
 module.exports = function($, builder, parameters = {}) {
 	let config = $.config
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
-	let outputDirectory = $.path.dirname(parameters.output)
-	let outputFileTitle = $.path.basename(parameters.output)
+	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = objectAssign({}, config.webpack, parameters.config || {})
-
-	taskConfig.output = {
-		filename: outputFileTitle,
-	}
+	let taskConfig = objectAssign({}, config.cson, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		if (!util.isPluginInstalled('webpack', 'webpack-stream')) return
+		if (!util.isPluginInstalled('cson', 'cson')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		builder.trigger('before')
 
 		return $.gulp.src(inputPaths)
-			.pipe($.webpack(taskConfig)
+			.pipe($.cson(taskConfig)
 				.on('error', function (err) {
 					$.notify.onError({
 						title: 'Gulp compile failed',
@@ -44,9 +39,6 @@ module.exports = function($, builder, parameters = {}) {
 				title: 'Gulp compile success!',
 				message: '<%= file.relative %>',
 			}))
-			.pipe($.if(config.sourcemaps, $.sourcemaps.init({ loadMaps: true })))
-			.pipe($.if(config.production, $.uglify(config.js.uglify)))
-			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', function () {
 				$.del.sync(cleanPaths)

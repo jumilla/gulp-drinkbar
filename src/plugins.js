@@ -38,6 +38,9 @@ const optionalPlugins = {
 	'coffeescript': 'gulp-coffee',
 	'typescript': 'gulp-typescript',
 	'riot': 'gulp-riot',
+	'json5': './streams/json5',
+	'cson': './streams/cson',
+	'yaml': './streams/yaml',
 }
 
 const plugins = {}

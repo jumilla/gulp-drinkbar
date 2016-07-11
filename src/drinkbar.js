@@ -84,10 +84,8 @@ drinkbar.addBuilder('define', ($, builder, closure = null) => {
 	$.gulp.task(builder.task, builder.dependentTasks, closure)
 })
 
-drinkbar.addBuilder('styles', require('./recipes/styles'))
-drinkbar.addBuilder('scripts', require('./recipes/scripts'))
-drinkbar.addBuilder('browserify', require('./recipes/browserify'))
-drinkbar.addBuilder('webpack', require('./recipes/webpack'))
+drinkbar.addBuilder('copy', require('./recipes/copy'))
+drinkbar.addBuilder('jade', require('./recipes/pug'))
 drinkbar.addBuilder('pug', require('./recipes/pug'))
 drinkbar.addBuilder('stylus', require('./recipes/stylus'))
 drinkbar.addBuilder('sass', require('./recipes/sass'))
@@ -96,8 +94,14 @@ drinkbar.addBuilder('babel', require('./recipes/babel'))
 drinkbar.addBuilder('coffeescript', require('./recipes/coffeescript'))
 drinkbar.addBuilder('typescript', require('./recipes/typescript'))
 drinkbar.addBuilder('riot', require('./recipes/riot'))
-drinkbar.addBuilder('copy', require('./recipes/copy'))
+drinkbar.addBuilder('styles', require('./recipes/styles'))
+drinkbar.addBuilder('scripts', require('./recipes/scripts'))
+drinkbar.addBuilder('browserify', require('./recipes/browserify'))
+drinkbar.addBuilder('webpack', require('./recipes/webpack'))
 drinkbar.addBuilder('erase', require('./recipes/erase'))
+drinkbar.addBuilder('json5', require('./recipes/json5'))
+drinkbar.addBuilder('cson', require('./recipes/cson'))
+drinkbar.addBuilder('yaml', require('./recipes/yaml'))
 
 drinkbar.addBuilder('watch', function ($, builder, patterns) {
 	drinkbar.watches[builder.task] = patterns

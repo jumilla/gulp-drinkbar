@@ -1,5 +1,6 @@
 
 import util from '../util'
+import objectAssign from 'object-assign'
 
 /**
  * parameters
@@ -10,11 +11,12 @@ import util from '../util'
  *     .clean  : string
  */
 module.exports = function($, builder, parameters = {}) {
-	let config = $.config
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = $.path.dirname(parameters.output)
 	let outputFileTitle = $.path.basename(parameters.output)
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
+	let taskConfig = objectAssign({}, parameters.config || {})
+	let config = objectAssign({}, $.config, taskConfig.autoprefixer ? {autoprefixer: taskConfig.autoprefixer} : {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPaths)) return
@@ -33,6 +35,7 @@ module.exports = function($, builder, parameters = {}) {
 					this.emit('end')
 				})
 			)
+			.pipe($.if(config.autoprefixer, $.autoprefixer(config.autoprefixer)))
 			.pipe($.notify({
 				title: 'Gulp compile success!',
 				message: '<%= file.relative %>',

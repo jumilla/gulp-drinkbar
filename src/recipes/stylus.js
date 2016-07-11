@@ -11,15 +11,20 @@ import objectAssign from 'object-assign'
  *     .clean  : string
  */
 module.exports = function($, builder, parameters = {}) {
-	let config = $.config
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = objectAssign({}, config.stylus, parameters.config || {})
+	let taskConfig = objectAssign({}, $.config.stylus, parameters.config || {})
+	let config = objectAssign({}, $.config, taskConfig.autoprefixer ? {autoprefixer: taskConfig.autoprefixer} : {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isPluginInstalled('stylus', 'gulp-stylus')) return
+		if (taskConfig.nib && !util.isPluginInstalled('nib', 'nib')) return
 		if (!util.isValidGlobs(inputPaths)) return
+
+		if (taskConfig.nib) {
+			taskConfig.use = [$.nib()]
+		}
 
 		builder.trigger('before')
 
@@ -35,6 +40,7 @@ module.exports = function($, builder, parameters = {}) {
 					this.emit('end')
 				})
 			)
+			.pipe($.if(config.autoprefixer, $.autoprefixer(config.autoprefixer)))
 			.pipe($.notify({
 				title: 'Gulp compile success!',
 				message: '<%= file.relative %>',

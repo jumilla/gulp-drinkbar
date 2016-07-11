@@ -27,6 +27,7 @@ const requirePlugins = {
 const optionalPlugins = {
 	'pug': 'gulp-pug',
 	'stylus': 'gulp-stylus',
+	'nib': 'nib',
 	'sass': 'gulp-sass',
 	'less': 'gulp-less',
 	'coffeescript': 'gulp-coffee',

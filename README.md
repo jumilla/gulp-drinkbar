@@ -76,18 +76,20 @@ drinkbar
 
 That's OK!
 
+サンプルをもっと見たければ、[gulp-drinkbar-examples](http://github.com/jumilla/gulp-drinkbar-examples)をダウンロードしてください。
+
 ## Commands
 
 あたなが使い慣れている `gulp` コマンドをそのまま使用できます。
 gulp commands are used in gulp-drinkbar
 
-### `gulp`
+### gulp
 
 .css と .js を生成するタスクでは、sourcemapも生成します。
 Additional sourcemap will be generated if your task includes compiling .css and/or .js file, a
 
 
-### `gulp --production`
+### gulp --production
 
 `default`タスクを実行します。
 It runs `default` task
@@ -98,12 +100,12 @@ It runs minify files when the task includes compiling .css file.
 .jsを生成するタスクでは、uglifyを実行します。
 It runs uglify files when the task includes compiling .js file.
 
-### `gulp <task>`
+### gulp `<task>`
 
 `<task>`で指定したgulpタスクを実行します。
-It runs specific <task>.
+It runs specific `<task>`.
 
-### `gulp watch`
+### gulp watch
 
 タスクに指定されたファイルパターンを監視し、変更を検知した時点でタスクを実行します。
 As you write code and modify your files, this command will listen for changes and automatically run designated tasks.
@@ -121,16 +123,16 @@ Your gulp tasks are written in `gulpfile.js`
 var drinkbar = require('gulp-drinkbar')
 
 drinkbar
-	.task(<taskname>)
-	.<recipe>({})
+	.task({taskname})
+	.{recipe}({})
 ```
 
-`<task>` には任意のGulpタスク名を指定します。
+`{task}` には任意のGulpタスク名を指定します。
 
-`<recipe>` には、後述するレシピ関数を指定します。
+`{recipe}` には、後述するレシピ関数を指定します。
 レシピ関数にはオブジェクト形式でパラメーターを指定できます。
 
-You can put designated functions (described in the recipe section below) in `<recipe>`
+You can put designated functions (described in the recipe section below) in `{recipe}`
 
 ES2015で記述したい場合は、`.babelrc` ファイルを用意し、`gulpfile.js` の代わりに `gulpfile.babel.js` というファイル名を使います。
 
@@ -150,8 +152,8 @@ If you write task by using ES2015, it needs to be written in `.babelrc` file. An
 import drinkbar from 'gulp-drinkbar'
 
 drinkbar
-	.task(<taskname>)
-	.<recipe>({})
+	.task({taskname})
+	.{recipe}({})
 ```
 
 
@@ -167,7 +169,7 @@ To pass one file or file pattern to task, use `input:`.
 ```javascript
 {
 	input: 'assets/test-1/a.css',
-},
+}
 ```
 
 複数ファイルパスもしくはファイルパターンを指定するには、.inputsを使います。
@@ -245,11 +247,11 @@ drinkbar
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
 
 ### pug (jade)
 
-pug (jade)ファイルをビルドするレシピです。
+pug(jade)ファイルをコンパイルするレシピです。
+.htmlファイルを生成します。
 To compile pug (jade) file.
 
 ```javascript
@@ -273,10 +275,12 @@ drinkbar
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
+      - See: https://github.com/jamen/gulp-pug#api
 
 ### stylus
 
-Stylusファイルをビルドするレシピです。
+Stylusファイルをコンパイルするレシピです。
+.cssファイルを生成します。
 To compile stylus file.
 
 ```javascript
@@ -301,10 +305,14 @@ drinkbar
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
+      - See: https://github.com/jescalan/accord/blob/master/docs/stylus.md
+    - [Optional] config.autoprefixer: Autoprefixerの設定
+      - See: https://github.com/postcss/autoprefixer#options
 
 ### sass
 
-Sasssファイルのコンパイル
+Sassファイルをコンパイルするレシピです。
+.cssファイルを生成します。
 To complie Sass file.
 
 `Compass` には対応していません。
@@ -320,6 +328,7 @@ drinkbar
 		],
 		output: 'public/assets/app.css',
 		config: {
+			autoprefixer: 'last 10 versions',
 		},
 	})
 	.watch('resources/assets/sass/**/*.+(scss|sass)')
@@ -333,11 +342,15 @@ drinkbar
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Optional] config: Sassの設定
+      - See: https://github.com/sass/node-sass#options
+    - [Optional] config.autoprefixer: Autoprefixerの設定
+      - See: https://github.com/postcss/autoprefixer#options
 
 ### less
 
-lessファイルのコンパイル
+lessファイルをコンパイルするレシピです。
+.cssファイルを生成します。
 To compile less file.
 
 ```javascript
@@ -363,10 +376,16 @@ drinkbar
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
+      - See: https://github.com/plus3network/gulp-less#options
+    - [Optional] config.autoprefixer: Autoprefixerの設定
+      - See: https://github.com/postcss/autoprefixer#options
 
 ### babel
 
-babelファイルのコンパイル
+babelを使ってJavaScriptをコンパイルするレシピです。
+プリセットを指定することで、ES2015やJSXをコンパイルできます。
+.jsファイルを生成します。
+
 To compile bable file.
 
 ```javascript
@@ -375,6 +394,21 @@ To compile bable file.
 			'assets/test-6/a.es6',
 		],
 		output: 'results/test-6',
+		config: [
+			presets: ['es2015'],
+		],
+	})
+```
+
+```javascript
+.babel({
+		inputs: [
+			'assets/test-6/c.jsx',
+		],
+		output: 'results/test-6',
+		config: [
+			presets: ['react'],
+		],
 	})
 ```
 
@@ -386,9 +420,12 @@ To compile bable file.
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
+      - See: https://babeljs.io/docs/usage/options/
 
 ### coffeescript
 
+CoffeeScriptファイルをコンパイルするレシピです。
+.jsファイルを生成します。
 To compile coffeescript file
 
 ```javascript
@@ -410,9 +447,12 @@ To compile coffeescript file
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
+      - see: http://coffeescript.org/
 
 ### typescript
 
+TypeScriptファイルをコンパイルするレシピです。
+.jsファイルを生成します。
 To compile typescript file
 
 ```javascript
@@ -434,10 +474,13 @@ To compile typescript file
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
+      - See: https://github.com/ivogabe/gulp-typescript#options
 
 ### json5
 
-To compile jason5 file
+JSON5ファイルをコンパイルするレシピです。
+.jsonファイルを生成します。
+To compile json5 file
 
 ```javascript
 .json5({
@@ -457,6 +500,8 @@ To compile jason5 file
 
 ### cson
 
+CSONファイルをコンパイルするレシピです。
+.jsonファイルを生成します。
 To compile cson file.
 
 ```javascript
@@ -477,6 +522,8 @@ To compile cson file.
 
 ### yaml
 
+YAMLファイルをコンパイルするレシピです。
+.jsonファイルを生成します。
 To compile yaml file.
 
 ```javascript
@@ -497,7 +544,7 @@ To compile yaml file.
 
 ### styles
 
-複数のスタイルシートを １つのファイルに生成します。
+複数のスタイルシートを連結し、単一の.cssファイルを生成します。
 To concatenates style sheets and saves the output.
 
 ```javascript
@@ -523,7 +570,7 @@ drinkbar
 
 ### scripts
 
-複数のスクリプトを１つのファイルに生成します。
+複数のスクリプトを連結し、単一の.jsファイルを生成します。
 To concatenates scripts and saves the output
 
 ```javascript
@@ -551,7 +598,8 @@ drinkbar
 
 ### browserify
 
-`browserify`を使ってスクリプトを１つのファイルに生成します。
+`browserify`を使って複数のスクリプトを連結し、Webブラウザで実行できる単一の.jsファイルを生成します。
+`babelify`で、ES2015やJSX形式のスクリプトをコンパイルすることもできます。
 To combine scripts into one by using `browserify`.
 
 ```javascript
@@ -578,10 +626,12 @@ drinkbar
     - [Require] output: 出力先ファイルパス (output file path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
+      - See: https://github.com/substack/node-browserify#browserifyfiles--opts
 
 ### webpack
 
-`webpack`を使ってスクリプトを１つのファイルに生成します。
+`webpack`を使って複数のスクリプトを連結し、Webブラウザで実行できる単一の.jsファイルを生成します。
+`babel-loader`で、ES2015やJSX形式のスクリプトをコンパイルすることもできます。
 To combine scripts into one by using `webpack`.
 
 ```javascript
@@ -608,6 +658,7 @@ drinkbar
     - [Require] output: 出力先ファイルパス (output file path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
+      - See: https://webpack.github.io/docs/configuration.html
 
 ### clean
 
@@ -636,8 +687,10 @@ drinkbar
 
 ### browsersync
 
-ブラウザ
-To erase designated files and/or directories
+`browser-sync`を使って、ライブリロードが可能なWebサーバーを立てることができます。
+
+watchにファイルパターンを指定すると、対象ファイルが更新されるたびに閲覧している  
+ページがリロードされるようになります。
 
 ```javascript
 drinkbar
@@ -656,7 +709,7 @@ drinkbar
 - Arguments:
   - [Require] 1. object
     - [Optional] config: 設定
-      - See: [Options](https://browsersync.io/docs/options)
+      - See: https://browsersync.io/docs/options
     - [Optional] watch/watches: 監視ファイルパス (watch file path(s))
 
 

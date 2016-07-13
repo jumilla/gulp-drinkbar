@@ -2,12 +2,15 @@
 import util from '../util'
 
 /**
- * parameters
- *     .inputs : array
+ * $ : object(plugins)
+ * builder : object(TaskBuilder)
+ * parameters : object
  *     .input  : string
+ *     .inputs : array
  *     .output : string
- *     .cleans : array
  *     .clean  : string
+ *     .cleans : array
+ *     .config : object
  */
 module.exports = function($, builder, parameters = {}) {
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])

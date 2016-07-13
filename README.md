@@ -49,14 +49,14 @@ gulp-drinkbar requires are below...
 
 [1] Install `gulp` on global and local.
 
-```
+```shell
 npm install -g gulp
 npm install gulp --save-dev
 ```
 
 [2] Install `gulp-drinkbar`.
 
-```
+```shell
 npm install gulp-drinkbar --save-dev
 ```
 
@@ -84,7 +84,7 @@ gulp commands are used in gulp-drinkbar
 
 ### `gulp`
 
-`.css`と`.js`を生成するタスクでは、sourcemapも生成します。
+.css と .js を生成するタスクでは、sourcemapも生成します。
 Additional sourcemap will be generated if your task includes compiling .css and/or .js file, a
 
 
@@ -116,6 +116,8 @@ As you write code and modify your files, this command will listen for changes an
 Gulpタスクは `gulpfile.js` に記述します。
 Your gulp tasks are written in `gulpfile.js`
 
+##### gulpfile.js
+
 ```javascript
 
 var drinkbar = require('gulp-drinkbar')
@@ -125,16 +127,18 @@ drinkbar
 	.<recipe>({})
 ```
 
-`.<recipe>()` には、後述するレシピ関数を指定します。
+`<task>` には任意のGulpタスク名を指定します。
+
+`<recipe>` には、後述するレシピ関数を指定します。
 レシピ関数にはオブジェクト形式でパラメーターを指定できます。
 
-You can put designated functions (described in the recipe section below) in `.<recipe>()` block. 
+You can put designated functions (described in the recipe section below) in `<recipe>`
 
 ES2015で記述したい場合は、`.babelrc` ファイルを用意し、`gulpfile.js` の代わりに `gulpfile.babel.js` というファイル名を使います。
 
 If you write task by using ES2015, it needs to be written in `.babelrc` file. And rename the `gulpfile.js` to `gulpfile.bable.js`.
 
-#### .bablerc
+##### .bablerc
 
 ```json
 {
@@ -142,15 +146,16 @@ If you write task by using ES2015, it needs to be written in `.babelrc` file. An
 }
 ```
 
+##### gulpfile.babel.js
+
 ```javascript
 
 import drinkbar from 'gulp-drinkbar'
 
 drinkbar
-	.task(***taskname***)
-	.***recipe***({})
+	.task(<taskname>)
+	.<recipe>({})
 ```
-| (need this?)
 
 
 ### Passing File Path
@@ -231,10 +236,13 @@ drinkbar
 ```
 
 - Recipe Type: 変換レシピ (compiling)
+- Modules: Nothing
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of input directory path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### pug (jade)
 
@@ -254,10 +262,14 @@ drinkbar
 ```
 
 - Recipe Type: 変換レシピ (compiling)
+- Modules:
+  - [Require] [gulp-pug](https://www.npmjs.com/package/gulp-pug)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of input path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### stylus
 
@@ -277,10 +289,15 @@ drinkbar
 ```
 
 - Recipe Type: 変換レシピ (compiling)
+- Modules:
+  - [Require] [gulp-stylus](https://www.npmjs.com/package/gulp-stylus)
+  - [Optional] [nib](https://www.npmjs.com/package/nib) if use `@import 'nib'`
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### Sass
 
@@ -296,18 +313,24 @@ drinkbar
 	.sass({
 		inputs: [
 			'resources/assets/sass/app.scss',
+			'resources/assets/sass/lib.sass',
 		],
 		output: 'public/assets/app.css',
 		config: {
 		},
 	})
-	.watch('resources/assets/sass/**/*.scss')
+	.watch('resources/assets/sass/**/*.+(scss|sass)')
 ```
+
 - Recipe Type: 変換レシピ (compiling)
+- Modules:
+  - [Require] [gulp-sass](https://www.npmjs.com/package/gulp-sass)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### less
 
@@ -327,11 +350,16 @@ drinkbar
 	})
 	.watch('resources/assets/less/**/*.less')
 ```
+
 - Recipe Type: 変換レシピ (compiling)
+- Modules:
+  - [Require] [gulp-less](https://www.npmjs.com/package/gulp-less)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### babel
 
@@ -346,11 +374,15 @@ To compile bable file.
 		output: 'results/test-6',
 	})
 ```
+
 - Recipe Type: 変換レシピ (compiling)
+- Modules: Nothing
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### coffeescript
 
@@ -365,11 +397,16 @@ To compile coffeescript file
 		output: 'results/test-7',
 	})
 ```
+
 - Recipe Type: 変換レシピ (compiling)
+- Modules:
+  - [Require] [gulp-coffee](https://www.npmjs.com/package/gulp-coffee)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### typescript
 
@@ -384,11 +421,16 @@ To compile typescript file
 		output: 'results/test-8',
 	})
 ```
+
 - Recipe Type: 変換レシピ (compiling)
+- Modules:
+  - [Require] [gulp-typescript](https://www.npmjs.com/package/gulp-typescript)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### json5
 
@@ -400,11 +442,15 @@ To compile jason5 file
 		output: 'results/test-14',
 	})
 ```
+
 - Recipe Type: 変換レシピ (compiling)
+- Modules: Nothing
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### cson
 
@@ -416,11 +462,15 @@ To compile cson file.
 		output: 'results/test-15',
 	})
 ```
+
 - Recipe Type: 変換レシピ (compiling)
+- Modules: Nothing
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### yaml
 
@@ -432,11 +482,15 @@ To compile yaml file.
 		output: 'results/test-16',
 	})
 ```
+
 - Recipe Type: 変換レシピ (compiling)
+- Modules: Nothing
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ディレクトリパス (output directory path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### styles
 
@@ -456,10 +510,13 @@ drinkbar
 	.watch('resources/assets/css/**/*.css')
 ```
 - Recipe Type: 結合レシピ (concatenating)
+- Modules: Nothing
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ファイルパス (output file path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### scripts
 
@@ -479,11 +536,15 @@ drinkbar
 	})
 	.watch('resources/assets/js/**/*.js')
 ```
+
 - Recipe Type: 結合レシピ (concatenating)
+- Modules: Nothing
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ファイルパス (output file path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### browserify
 
@@ -505,10 +566,45 @@ drinkbar
 ```
 
 - Recipe Type: 結合レシピ (concatenating)
+- Modules:
+  - [Require] [browserify](https://www.npmjs.com/package/browserify)
+  - [Require] [babelify](https://www.npmjs.com/package/babelify)
 - Parameters:
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - output: 出力先ディレクトリパス (output directory)
-  - config: 設定
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ファイルパス (output file path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
+
+### webpack
+
+`webpack`を使ってスクリプトを１つのファイルに生成します。
+To combine scripts into one by using `webpack`.
+
+```javascript
+drinkbar
+	.task('script:app')
+	.webpack({
+		inputs: [
+			'resources/assets/js/app.js',
+		],
+		output: 'public/assets/app.js',
+		config: {
+		},
+	})
+	.watch('resources/assets/js/**/*.js')
+```
+
+- Recipe Type: 結合レシピ (concatenating)
+- Modules:
+  - [Require] [webpack-stream](https://www.npmjs.com/package/webpack-stream)
+  - [Optional] [babel-loader](https://www.npmjs.com/package/babel-loader) if needs compile es2015, react(.jsx), ...
+- Parameters:
+  - [Require] 1. object
+    - [Require] input/inputs: 入力ファイルパス (input file path(s))
+    - [Require] output: 出力先ファイルパス (output file path)
+    - [Optional] clean/cleans: 削除ファイルパス
+    - [Optional] config: 設定
 
 ### clean
 
@@ -518,11 +614,22 @@ To erase designated files and/or directories
 ```javascript
 drinkbar
 	.task('scripts:clean')
-	.clean('resources/assets/js/app.js')
+	.clean('resources/assets/app.*')
+```
+
+```javascript
+drinkbar
+	.task('scripts:clean')
+	.clean([
+		'resources/assets/css/*.css',
+		'resources/assets/js/*.js',
+	])
 ```
 
 - Recipe Type: 作業レシピ (working)
-- Parameters: string / array[string]: 入力ファイルパス (list of inputs path(s))
+- Modules: Nothing
+- Parameters:
+	- [Require] 1. string / array[string]: 入力ファイルパス (list of inputs path(s))
 
 ### browsersync
 
@@ -533,20 +640,21 @@ To erase designated files and/or directories
 drinkbar
 	.task('serve')
 	.browsersync({
-		input: 'public/**/*',
 		config: {
 			server: 'public',
 		},
+		watch: 'public/**/*',
 	})
 ```
 
 - Recipe Type: 作業レシピ (working)
 - Require npm modules:
-  - `browser-sync`
+  - [browser-sync](https://www.npmjs.com/package/browser-sync)
 - Parameters: object
-  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
-  - config: 設定
-    - [Options](https://browsersync.io/docs/options)
+  - [Require] 1. object
+    - [Optional] config: 設定
+      - See: [Options](https://browsersync.io/docs/options)
+    - [Optional] watch/watches: 監視ファイルパス (watch file path(s))
 
 
 

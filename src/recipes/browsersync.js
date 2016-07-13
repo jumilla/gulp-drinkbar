@@ -2,18 +2,19 @@
 import util from '../util'
 
 /**
- * parameters
- *     .inputs : array
- *     .input  : string
+ * $ : object(plugins)
+ * builder : object(TaskBuilder)
+ * parameters : object
  *     .config : object
+ *     .watch  : string
+ *     .watches : array
  */
 module.exports = function($, builder, parameters) {
-	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let taskConfig = util.extend($.config.browserSync, parameters.config || {})
+	let watchPaths = parameters.watches || (parameters.watch ? [parameters.watch] : [])
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isPluginInstalled('browserSync', 'browser-sync')) return
-		if (!util.isValidGlobs(inputPaths)) return
 
 		builder.trigger('before')
 
@@ -21,8 +22,8 @@ module.exports = function($, builder, parameters) {
 
 		browserSync.init(taskConfig)
 
-		inputPaths.forEach(
-			inputPath => $.gulp.watch(inputPath).on('change', browserSync.reload)
+		watchPaths.forEach(
+			watchPaths => $.gulp.watch(watchPath).on('change', browserSync.reload)
 		)
 	})
 }

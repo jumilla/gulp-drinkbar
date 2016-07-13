@@ -2,14 +2,19 @@
 import util from '../util'
 
 /**
- * parameters
- *     .inputs : array
+ * $ : object(plugins)
+ * builder : object(TaskBuilder)
+ * parameters : object
  *     .input  : string
+ *     .inputs : array
  *     .output : string
+ *     .clean  : string
+ *     .cleans : array
  */
 module.exports = function($, builder, parameters) {
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = parameters.output
+	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPaths)) return
@@ -23,6 +28,8 @@ module.exports = function($, builder, parameters) {
 				message: '<%= file.relative %>',
 			}))
 			.on('end', () => {
+				$.del.sync(cleanPaths)
+
 				builder.trigger('after')
 			})
 	})

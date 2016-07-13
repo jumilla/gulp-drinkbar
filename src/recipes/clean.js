@@ -2,6 +2,9 @@
 import util from '../util'
 
 /**
+ * $ : object(plugins)
+ * builder : object(TaskBuilder)
+ * filePatterns : string / array
  */
 module.exports = function($, builder, filePatterns) {
 	if (typeof filePatterns === 'string') {

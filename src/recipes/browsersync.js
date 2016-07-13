@@ -23,7 +23,7 @@ module.exports = function($, builder, parameters) {
 		browserSync.init(taskConfig)
 
 		watchPaths.forEach(
-			watchPaths => $.gulp.watch(watchPath).on('change', browserSync.reload)
+			watchPath => $.gulp.watch(watchPath).on('change', browserSync.reload)
 		)
 	})
 }

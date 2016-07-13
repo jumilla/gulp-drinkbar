@@ -37,17 +37,49 @@ drinkbar
 
 ## Getting Started
 
-gulp-drinkbar requires of installation of node.js v0.12 or later
-node.js v0.12以降の動作環境が必要です。
+gulp-drinkbarの動作環境は次の通りです。
+gulp-drinkbar requires are below...
+
+| Module        | Version       |
+| ------------- | ------------- |
+| Node.js       | >= 0.12       |
+| gulp          | >= 3.9        |
+
+### Installation
+
+[1] Install `gulp` on global and local.
+
+```
+npm install -g gulp
+npm install gulp --save-dev
+```
+
+[2] Install `gulp-drinkbar`.
 
 ```
 npm install gulp-drinkbar --save-dev
 ```
 
+### Minimum example
+
+[1] make `gulpfile.js`.
+
+```javascript
+
+var drinkbar = require('gulp-drinkbar')
+
+drinkbar
+	.task('default')
+	.define()
+```
+
+[2] Run command `gulp`.
+
+That's OK!
 
 ## Commands
 
-使い慣れている `gulp` コマンドをそのまま使用します。
+あたなが使い慣れている `gulp` コマンドをそのまま使用できます。
 gulp commands are used in gulp-drinkbar
 
 ### `gulp`
@@ -59,23 +91,23 @@ Additional sourcemap will be generated if your task includes compiling .css and/
 ### `gulp --production`
 
 `default`タスクを実行します。
-It runs default task
+It runs `default` task
 
 .cssを生成するタスクでは、minifyを実行します。
 It runs minify files when the task includes compiling .css file.
 
 .jsを生成するタスクでは、uglifyを実行します。
-It runs uglify files when the task includes compiling .js file
+It runs uglify files when the task includes compiling .js file.
 
 ### `gulp <task>`
 
-指定したgulpタスクを実行します。
-It runs specific task
+`<task>`で指定したgulpタスクを実行します。
+It runs specific <task>.
 
 ### `gulp watch`
 
 タスクに指定されたファイルパターンを監視し、変更を検知した時点でタスクを実行します。
-As you write code and modify your files, the `gulp.watch()` method will listen for changes and automatically run designated tasks.
+As you write code and modify your files, this command will listen for changes and automatically run designated tasks.
 
 
 
@@ -89,20 +121,21 @@ Your gulp tasks are written in `gulpfile.js`
 var drinkbar = require('gulp-drinkbar')
 
 drinkbar
-	.task(***taskname***)
-	.***recipe***({})
+	.task(<taskname>)
+	.<recipe>({})
 ```
 
-`.recipe()` には、後述するレシピ関数を指定します。
+`.<recipe>()` には、後述するレシピ関数を指定します。
 レシピ関数にはオブジェクト形式でパラメーターを指定できます。
 
-You can put designated functions (described in the recipe section below) in `.recipe()` block. 
+You can put designated functions (described in the recipe section below) in `.<recipe>()` block. 
 
-ES2015で記述したい場合は、`.babelrc` ファイルを用意し、`gulpfile.js` ではなく `gulpfile.babel.js` というファイル名にします。
+ES2015で記述したい場合は、`.babelrc` ファイルを用意し、`gulpfile.js` の代わりに `gulpfile.babel.js` というファイル名を使います。
 
-If you write task by using ES2015, it needs to be written in `.babelrc` file. And rename the `gulpfile.js`. file to `gulpfile.bable.js`
+If you write task by using ES2015, it needs to be written in `.babelrc` file. And rename the `gulpfile.js` to `gulpfile.bable.js`.
 
-####bablerc
+#### .bablerc
+
 ```json
 {
   "presets": ["es2015"]
@@ -119,7 +152,8 @@ drinkbar
 ```
 | (need this?)
 
-###Passing File Path
+
+### Passing File Path
  入力ファイルの指定方法
 
 レシピ関数のパラメーターに入力ファイルパスを指定する方法は2つあります。
@@ -174,9 +208,9 @@ drinkbar
 
 Recipes are functions that includes gulp tasks used frequently. 
 
-レシピには、指定したソースファイルリストの一つ一つに対して処理を行わせる「変換レシピ」と、指定したソースファイルリストから一つのファイルを生成する「結合レシピ」があります。
+レシピには、指定したソースファイルリストの一つ一つに対して処理を行わせる「変換レシピ」と、指定したソースファイルリストから一つのファイルを生成する「結合レシピ」、その他ファイルを生成しない「作業レシピ」があります。
 
-Recipes include "compiling" which compile selected file and "concatenating" files.
+Recipes include "compiling" which compile selected file, "concatenating" files, and "work".
 
 ### copy
 
@@ -193,7 +227,7 @@ drinkbar
 		],
 		output: 'public/assets',
 	})
-	.watch('resources/assets/*/bootstrap.*')
+	.watch('resources/assets/**/bootstrap.*')
 ```
 
 - Recipe Type: 変換レシピ (compiling)
@@ -300,8 +334,10 @@ drinkbar
   - config: 設定
 
 ### babel
+
 babelファイルのコンパイル
 To compile bable file.
+
 ```javascript
 .babel({
 		inputs: [
@@ -315,8 +351,11 @@ To compile bable file.
   - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
   - output: 出力先ディレクトリパス (output directory)
   - config: 設定
+
 ### coffeescript
+
 To compile coffeescript file
+
 ```javascript
 .coffeescript({
 		inputs: [
@@ -333,7 +372,9 @@ To compile coffeescript file
   - config: 設定
 
 ### typescript
+
 To compile typescript file
+
 ```javascript
 .typescript({
 		inputs: [
@@ -348,7 +389,9 @@ To compile typescript file
   - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
   - output: 出力先ディレクトリパス (output directory)
   - config: 設定
+
 ### json5
+
 To compile jason5 file
 
 ```javascript
@@ -362,8 +405,11 @@ To compile jason5 file
   - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
   - output: 出力先ディレクトリパス (output directory)
   - config: 設定
+
 ### cson
+
 To compile cson file.
+
 ```javascript
 .cson({
 		input: 'assets/test-15/config.cson',
@@ -375,8 +421,11 @@ To compile cson file.
   - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
   - output: 出力先ディレクトリパス (output directory)
   - config: 設定
+
 ### yaml
+
 To compile yaml file.
+
 ```javascript
 .yaml({
 		input: 'assets/test-16/config.yaml',
@@ -388,6 +437,7 @@ To compile yaml file.
   - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
   - output: 出力先ディレクトリパス (output directory)
   - config: 設定
+
 ### styles
 
 複数のスタイルシートを １つのファイルに生成します。
@@ -453,29 +503,60 @@ drinkbar
 	})
 	.watch('resources/assets/js/**/*.js')
 ```
+
 - Recipe Type: 結合レシピ (concatenating)
 - Parameters:
   - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
   - output: 出力先ディレクトリパス (output directory)
   - config: 設定
 
-### erase
+### clean
 
 指定のフォルダ、ファイルを削除します。
 To erase designated files and/or directories
 
 ```javascript
 drinkbar
-	.task('scripts')
-	.erase('resources/assets/js/app.js')
+	.task('scripts:clean')
+	.clean('resources/assets/js/app.js')
 ```
+
+- Recipe Type: 作業レシピ (working)
+- Parameters: string / array[string]: 入力ファイルパス (list of inputs path(s))
+
+### browsersync
+
+ブラウザ
+To erase designated files and/or directories
+
+```javascript
+drinkbar
+	.task('serve')
+	.browsersync({
+		input: 'public/**/*',
+		config: {
+			server: 'public',
+		},
+	})
+```
+
+- Recipe Type: 作業レシピ (working)
+- Require npm modules:
+  - `browser-sync`
+- Parameters: object
+  - inputs/input: 入力ファイルパスリスト (list of inputs path(s))
+  - config: 設定
+    - [Options](https://browsersync.io/docs/options)
+
+
+
 ## Methods
 
 ### drinkbar.task(task : string, dependentTasks : array) : TaskBuilder
 
-### TaskBuilder#{recipe}() : TaskBuilder
+### TaskBuilder#{recipe}(...parameters) : TaskBuilder
 
-### TaskBuilder#define() : TaskBuilder
+### TaskBuilder#define(closure : function($, builder, ...parameters) = null) : TaskBuilder
 
 空のタスクを作成します。
 

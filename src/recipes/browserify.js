@@ -1,6 +1,5 @@
 
 import util from '../util'
-import objectAssign from 'object-assign'
 
 /**
  * parameters
@@ -16,7 +15,7 @@ module.exports = function($, builder, parameters = {}) {
 	let outputDirectory = $.path.dirname(parameters.output)
 	let outputFileTitle = $.path.basename(parameters.output)
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = objectAssign({}, config.browserify, parameters.config || {})
+	let taskConfig = util.extend(config.browserify, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isPluginInstalled('browserify', 'browserify')) return

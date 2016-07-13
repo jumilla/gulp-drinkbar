@@ -43,13 +43,6 @@ module.exports = {
 	riot: {
 	},
 
-	browserify: {
-		babelify: {presets: 'es2015'},
-	},
-
-	webpack: {
-	},
-
 	json5: {
 	},
 
@@ -57,6 +50,16 @@ module.exports = {
 	},
 
 	yaml: {
+	},
+
+	browserify: {
+		babelify: {presets: 'es2015'},
+	},
+
+	webpack: {
+	},
+
+	browserSync: {
 	},
 }
 

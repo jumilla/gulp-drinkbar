@@ -1,15 +1,22 @@
 
 import plugins from './plugins'
+import objectAssign from 'object-assign'
 import fs from 'fs'
 import {log} from 'gulp-util'
 import chalk from 'chalk'
 
 
 
+function extend(...objects) {
+	objects.unshift({})
+
+	return objectAssign.apply(null, objects)
+}
+
 function isPluginInstalled(name, npmModule) {
 	if (!plugins[name]) {
-		log(chalk.red('Please install npm module "' + npmModule + '".'))
-		log(chalk.yellow('Install command is "npm install ' + npmModule + ' --save-dev"'))
+		log(chalk.red('Please install npm module ') + chalk.white.bgRed('"' + npmModule + '"') + chalk.red('.'))
+		log(chalk.yellow('Install command is ') + chalk.green('"npm install ' + npmModule + ' --save-dev"'))
 		return false
 	}
 
@@ -37,6 +44,7 @@ function isValidGlobs(paths) {
 }
 
 module.exports = {
+	extend: extend,
 	isPluginInstalled: isPluginInstalled,
 	isGlob: isGlob,
 	isValidGlobs: isValidGlobs,

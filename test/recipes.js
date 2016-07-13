@@ -50,6 +50,24 @@ describe('gulp-drinkbar recipes', () => {
 		assert(recipe != null, 'typescript is null')
 	})
 
+	it('json5 recipe is valid', () => {
+		let recipe = require('../lib/recipes/json5')
+
+		assert(recipe != null, 'json5 is null')
+	})
+
+	it('cson recipe is valid', () => {
+		let recipe = require('../lib/recipes/cson')
+
+		assert(recipe != null, 'cson is null')
+	})
+
+	it('yaml recipe is valid', () => {
+		let recipe = require('../lib/recipes/yaml')
+
+		assert(recipe != null, 'yaml is null')
+	})
+
 	it('scripts recipe is valid', () => {
 		let recipe = require('../lib/recipes/scripts')
 
@@ -74,9 +92,15 @@ describe('gulp-drinkbar recipes', () => {
 		assert(recipe != null, 'webpack is null')
 	})
 
-	it('erase recipe is valid', () => {
-		let recipe = require('../lib/recipes/erase')
+	it('clean recipe is valid', () => {
+		let recipe = require('../lib/recipes/clean')
 
-		assert(recipe != null, 'erase is null')
+		assert(recipe != null, 'clean is null')
+	})
+
+	it('browsersync recipe is valid', () => {
+		let recipe = require('../lib/recipes/browsersync')
+
+		assert(recipe != null, 'browsersync is null')
 	})
 })

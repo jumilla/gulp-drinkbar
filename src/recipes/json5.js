@@ -1,6 +1,5 @@
 
 import util from '../util'
-import objectAssign from 'object-assign'
 
 /**
  * parameters
@@ -15,7 +14,7 @@ module.exports = function($, builder, parameters = {}) {
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = objectAssign({}, config.json5, parameters.config || {})
+	let taskConfig = util.extend(config.json5, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isPluginInstalled('json5', 'json5')) return

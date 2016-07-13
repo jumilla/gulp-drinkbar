@@ -1,6 +1,5 @@
 
 import util from '../util'
-import objectAssign from 'object-assign'
 
 /**
  * parameters
@@ -14,8 +13,8 @@ module.exports = function($, builder, parameters = {}) {
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = objectAssign({}, $.config.stylus, parameters.config || {})
-	let config = objectAssign({}, $.config, taskConfig.autoprefixer ? {autoprefixer: taskConfig.autoprefixer} : {})
+	let taskConfig = util.extend($.config.stylus, parameters.config || {})
+	let config = util.extend($.config, taskConfig.autoprefixer ? {autoprefixer: taskConfig.autoprefixer} : {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isPluginInstalled('stylus', 'gulp-stylus')) return
@@ -46,7 +45,7 @@ module.exports = function($, builder, parameters = {}) {
 				message: '<%= file.relative %>',
 			}))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.init({ loadMaps: true })))
-			.pipe($.if(config.production, $['clean-css'](config.css.minifier)))
+			.pipe($.if(config.production, $.cleanCss(config.css.minifier)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', function () {

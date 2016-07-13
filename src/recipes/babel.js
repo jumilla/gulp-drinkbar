@@ -1,6 +1,5 @@
 
 import util from '../util'
-import objectAssign from 'object-assign'
 
 /**
  * parameters
@@ -15,7 +14,7 @@ module.exports = function($, builder, parameters = {}) {
 	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
 	let outputDirectory = parameters.output
 	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
-	let taskConfig = objectAssign({}, config.babel, parameters.config || {})
+	let taskConfig = util.extend(config.babel, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPaths)) return

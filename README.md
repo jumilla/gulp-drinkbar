@@ -65,7 +65,6 @@ npm install gulp-drinkbar --save-dev
 [1] make `gulpfile.js`.
 
 ```javascript
-
 var drinkbar = require('gulp-drinkbar')
 
 drinkbar
@@ -119,7 +118,6 @@ Your gulp tasks are written in `gulpfile.js`
 ##### gulpfile.js
 
 ```javascript
-
 var drinkbar = require('gulp-drinkbar')
 
 drinkbar
@@ -149,7 +147,6 @@ If you write task by using ES2015, it needs to be written in `.babelrc` file. An
 ##### gulpfile.babel.js
 
 ```javascript
-
 import drinkbar from 'gulp-drinkbar'
 
 drinkbar
@@ -198,14 +195,20 @@ Wildcard (Glob) can be used to specify file pattern.
 
 ### Task Group
 
-タスクグループの定義の方法
 To define task group.
+
+タスクをグループ化するには、
+drinkbar.task() の第2引数に依存タスクを指定し、何もしないタスクを定義してください。
 
 ```javascript
 drinkbar
 	.task('scripts', ['script:libs', 'script:app'])
 	.define()
 ```  		  
+
+コマンド `gulp scripts` を実行すると、`script:libs`タスクと`script:app`タスクが実行されます。
+
+
 
 ## Recipes
 
@@ -220,7 +223,7 @@ Recipes include "compiling" which compile selected file, "concatenating" files, 
 ### copy
 
 ファイルを単純にコピーするレシピです。
-To copy file.
+To copy file simply.
 
 ```javascript
 drinkbar
@@ -237,7 +240,7 @@ drinkbar
 
 - Recipe Type: 変換レシピ (compiling)
 - Modules: Nothing
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -264,7 +267,7 @@ drinkbar
 - Recipe Type: 変換レシピ (compiling)
 - Modules:
   - [Require] [gulp-pug](https://www.npmjs.com/package/gulp-pug)
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -292,14 +295,14 @@ drinkbar
 - Modules:
   - [Require] [gulp-stylus](https://www.npmjs.com/package/gulp-stylus)
   - [Optional] [nib](https://www.npmjs.com/package/nib) if use `@import 'nib'`
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
     - [Optional] clean/cleans: 削除ファイルパス
     - [Optional] config: 設定
 
-### Sass
+### sass
 
 Sasssファイルのコンパイル
 To complie Sass file.
@@ -325,7 +328,7 @@ drinkbar
 - Recipe Type: 変換レシピ (compiling)
 - Modules:
   - [Require] [gulp-sass](https://www.npmjs.com/package/gulp-sass)
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -354,7 +357,7 @@ drinkbar
 - Recipe Type: 変換レシピ (compiling)
 - Modules:
   - [Require] [gulp-less](https://www.npmjs.com/package/gulp-less)
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -377,7 +380,7 @@ To compile bable file.
 
 - Recipe Type: 変換レシピ (compiling)
 - Modules: Nothing
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -401,7 +404,7 @@ To compile coffeescript file
 - Recipe Type: 変換レシピ (compiling)
 - Modules:
   - [Require] [gulp-coffee](https://www.npmjs.com/package/gulp-coffee)
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -425,7 +428,7 @@ To compile typescript file
 - Recipe Type: 変換レシピ (compiling)
 - Modules:
   - [Require] [gulp-typescript](https://www.npmjs.com/package/gulp-typescript)
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -445,7 +448,7 @@ To compile jason5 file
 
 - Recipe Type: 変換レシピ (compiling)
 - Modules: Nothing
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -465,7 +468,7 @@ To compile cson file.
 
 - Recipe Type: 変換レシピ (compiling)
 - Modules: Nothing
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -485,7 +488,7 @@ To compile yaml file.
 
 - Recipe Type: 変換レシピ (compiling)
 - Modules: Nothing
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ディレクトリパス (output directory path)
@@ -511,7 +514,7 @@ drinkbar
 ```
 - Recipe Type: 結合レシピ (concatenating)
 - Modules: Nothing
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ファイルパス (output file path)
@@ -539,7 +542,7 @@ drinkbar
 
 - Recipe Type: 結合レシピ (concatenating)
 - Modules: Nothing
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ファイルパス (output file path)
@@ -569,7 +572,7 @@ drinkbar
 - Modules:
   - [Require] [browserify](https://www.npmjs.com/package/browserify)
   - [Require] [babelify](https://www.npmjs.com/package/babelify)
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ファイルパス (output file path)
@@ -599,7 +602,7 @@ drinkbar
 - Modules:
   - [Require] [webpack-stream](https://www.npmjs.com/package/webpack-stream)
   - [Optional] [babel-loader](https://www.npmjs.com/package/babel-loader) if needs compile es2015, react(.jsx), ...
-- Parameters:
+- Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス (input file path(s))
     - [Require] output: 出力先ファイルパス (output file path)
@@ -628,7 +631,7 @@ drinkbar
 
 - Recipe Type: 作業レシピ (working)
 - Modules: Nothing
-- Parameters:
+- Arguments:
 	- [Require] 1. string / array[string]: 入力ファイルパス (list of inputs path(s))
 
 ### browsersync
@@ -648,9 +651,9 @@ drinkbar
 ```
 
 - Recipe Type: 作業レシピ (working)
-- Require npm modules:
-  - [browser-sync](https://www.npmjs.com/package/browser-sync)
-- Parameters: object
+- Modules:
+  - [Require] [browser-sync](https://www.npmjs.com/package/browser-sync)
+- Arguments:
   - [Require] 1. object
     - [Optional] config: 設定
       - See: [Options](https://browsersync.io/docs/options)
@@ -662,21 +665,110 @@ drinkbar
 
 ### drinkbar.task(task : string, dependentTasks : array) : TaskBuilder
 
+タスクビルダーを生成します。
+
+##### Arguments
+
+- task : string : タスク名
+- dependentTasks : array : 依存タスク名リスト
+
+##### Return
+
+- TaskBuilder : タスクビルダー
+
 ### TaskBuilder#{recipe}(...parameters) : TaskBuilder
+
+指定のレシピでGulpタスクを作成します。
+
+##### Arguments
+
+- parameters : argument array : 引数リスト
+
+##### Return
+
+- TaskBuilder : タスクビルダー
 
 ### TaskBuilder#define(closure : function($, builder, ...parameters) = null) : TaskBuilder
 
-空のタスクを作成します。
+指定のロジックでGulpタスクを作成します。
 
-`drinkbar.task()` に依存タスクが指定されている場合、
+##### Arguments
+
+- closure : function($, builder, ...parameters) : 定義関数
+
+##### Return
+
+- TaskBuilder : タスクビルダー
 
 ### TaskBuilder#on('before', callback : function) : TaskBuilder
 
+Gulpタスク実行前のイベントを受け取ります。
+
+##### Arguments
+
+- callback : function() : コールバック関数
+
+##### Return
+
+- TaskBuilder : タスクビルダー
+
 ### TaskBuilder#on('after', callback : function) : TaskBuilder
 
-### TaskBuilder#watch(patterns : array) : TaskBuilder
+Gulpタスク実行後のイベントを受け取ります。
+
+##### Arguments
+
+- callback : function() : コールバック関数
+
+##### Return
+
+- TaskBuilder : タスクビルダー
+
+### TaskBuilder#watch(patterns : string|array) : TaskBuilder
+
+監視するファイルパターンをGlob形式で指定し、Gulpタスクに関連付けます。
+
+##### Arguments
+
+- patterns : string|array : ファイルパターンまたはファイルパターン配列
+
+##### Return
+
+- TaskBuilder : タスクビルダー
 
 ### drinkbar.notify(message : string, title : string) : void
 
+プラットフォームに通知を送ります。
+
+同じ内容をコンソールにもログ出力します。
+
+##### Arguments
+
+- message : string : 通知するメッセージ
+- title : string : メッセージにつけるタイトル
+
+##### Return
+
+ありません。
+
 ### drinkbar.log(message : string) : void
 
+コンソールにログ出力します。
+
+`chalk` ライブラリを使って色をつけることもできます。
+
+##### Arguments
+
+- message : string : 出力するメッセージ
+
+##### Return
+
+ありません。
+
+
+
+## Author
+
+Jumilla (Fumio Furukawa)
+
+[MIT](http://spdx.org/licenses/MIT) License.

@@ -85,32 +85,38 @@ drinkbar.addBuilderMethod('define', ($, builder, closure = null) => {
 })
 
 drinkbar.addBuilderMethod('watch', function ($, builder, patterns) {
+	if (typeof patterns == 'string') {
+		patterns = [patterns]
+	}
 	drinkbar.watches[builder.task] = patterns
 })
 
-drinkbar.addRecipe = (method, path) => {
-	drinkbar.addBuilderMethod(method, require(path))
+
+
+drinkbar.addRecipe = (method, recipe = null) => {
+	if (!recipe) recipe = method
+	drinkbar.addBuilderMethod(method, require('./recipes/' + recipe))
 }
 
-drinkbar.addRecipe('copy', './recipes/copy')
-drinkbar.addRecipe('jade', './recipes/pug')
-drinkbar.addRecipe('pug', './recipes/pug')
-drinkbar.addRecipe('stylus', './recipes/stylus')
-drinkbar.addRecipe('sass', './recipes/sass')
-drinkbar.addRecipe('less', './recipes/less')
-drinkbar.addRecipe('babel', './recipes/babel')
-drinkbar.addRecipe('coffeescript', './recipes/coffeescript')
-drinkbar.addRecipe('typescript', './recipes/typescript')
-drinkbar.addRecipe('riot', './recipes/riot')
-drinkbar.addRecipe('json5', './recipes/json5')
-drinkbar.addRecipe('cson', './recipes/cson')
-drinkbar.addRecipe('yaml', './recipes/yaml')
-drinkbar.addRecipe('styles', './recipes/styles')
-drinkbar.addRecipe('scripts', './recipes/scripts')
-drinkbar.addRecipe('browserify', './recipes/browserify')
-drinkbar.addRecipe('webpack', './recipes/webpack')
-drinkbar.addRecipe('clean', './recipes/clean')
-drinkbar.addRecipe('browsersync', './recipes/browsersync')
+drinkbar.addRecipe('copy')
+drinkbar.addRecipe('jade', 'pug')
+drinkbar.addRecipe('pug')
+drinkbar.addRecipe('stylus')
+drinkbar.addRecipe('sass')
+drinkbar.addRecipe('less')
+drinkbar.addRecipe('babel')
+drinkbar.addRecipe('coffeescript')
+drinkbar.addRecipe('typescript')
+drinkbar.addRecipe('riot')
+drinkbar.addRecipe('json5')
+drinkbar.addRecipe('cson')
+drinkbar.addRecipe('yaml')
+drinkbar.addRecipe('styles')
+drinkbar.addRecipe('scripts')
+drinkbar.addRecipe('browserify')
+drinkbar.addRecipe('webpack')
+drinkbar.addRecipe('clean')
+drinkbar.addRecipe('browsersync')
 
 
 

@@ -40,4 +40,4 @@ gulp.task('watch', () => {
 
 
 
-export default drinkbar
+module.exports = drinkbar

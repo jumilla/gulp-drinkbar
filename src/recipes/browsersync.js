@@ -9,7 +9,7 @@ import util from '../util'
  *     .watch  : string
  *     .watches : array
  */
-export default function($, builder, parameters) {
+module.exports = function($, builder, parameters) {
 	util.checkParameterIsObject(parameters)
 
 	let taskConfig = util.extend($.config.browserSync, parameters.config || {})

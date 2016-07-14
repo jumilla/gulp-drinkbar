@@ -12,7 +12,7 @@ import util from '../util'
  *     .cleans : array
  *     .config : object
  */
-export default function($, builder, parameters) {
+module.exports = function($, builder, parameters) {
 	util.checkParameterIsObject(parameters)
 
 	let inputPaths = builder.resolvePaths(parameters.inputs || (parameters.input ? [parameters.input] : []))

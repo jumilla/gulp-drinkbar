@@ -6,7 +6,7 @@ import util from '../util'
  * builder : object(TaskBuilder)
  * filePatterns : string / array
  */
-export default function($, builder, filePatterns) {
+module.exports = function($, builder, filePatterns) {
 	if (typeof filePatterns === 'string') {
 		filePatterns = [filePatterns]
 	}

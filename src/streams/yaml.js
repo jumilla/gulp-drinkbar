@@ -47,7 +47,7 @@ function parseSchema(schema) {
 
 
 
-export default function (options) {
+module.exports = function (options) {
 	options = objectAssign({}, {safe: true, replacer: null, space: null}, options)
 
 	let providedFilename = options.filename

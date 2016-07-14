@@ -11,7 +11,7 @@ import util from '../util'
  *     .clean  : string
  *     .cleans : array
  */
-export default function($, builder, parameters) {
+module.exports = function($, builder, parameters) {
 	util.checkParameterIsObject(parameters)
 
 	let inputPaths = builder.resolvePaths(parameters.inputs || (parameters.input ? [parameters.input] : []))

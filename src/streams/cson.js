@@ -23,7 +23,7 @@ function cson2json(buffer, options) {
 
 
 
-export default function (options) {
+module.exports = function (options) {
 	options = objectAssign({}, {safe: true, replacer: null, space: null}, options)
 	var providedFilename = options.filename
 

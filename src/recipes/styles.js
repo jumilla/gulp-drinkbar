@@ -12,7 +12,7 @@ import util from '../util'
  *     .cleans : array
  *     .config : object
  */
-module.exports = function($, builder, parameters) {
+export default function($, builder, parameters) {
 	util.checkParameterIsObject(parameters)
 	util.checkParameterHasOutput(parameters)
 

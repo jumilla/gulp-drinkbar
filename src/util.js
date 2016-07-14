@@ -55,7 +55,7 @@ function isValidGlobs(paths) {
 	}
 }
 
-module.exports = {
+export default {
 	extend: extend,
 	checkParameterIsObject: checkParameterIsObject,
 	checkParameterHasOutput: checkParameterHasOutput,

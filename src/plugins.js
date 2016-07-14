@@ -58,4 +58,4 @@ for (let name in optionalPlugins) {
 	}
 }
 
-module.exports = plugins
+export default plugins

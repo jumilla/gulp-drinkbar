@@ -3,7 +3,8 @@ import Location from './location'
 
 export default class TaskBuilder {
 
-	constructor(task, dependentTasks) {
+	constructor(drinkbar, task, dependentTasks) {
+		this.drinkbar = drinkbar
 		this.task = task
 		this.dependentTasks = dependentTasks
 		this.location = Location.root
@@ -31,7 +32,7 @@ export default class TaskBuilder {
 			patterns = [patterns]
 		}
 
-		drinkbar.watches[this.task] = this.resolvePaths(patterns)
+		this.drinkbar.watches[this.task] = this.resolvePaths(patterns)
 
 		return this
 	}

@@ -24,7 +24,7 @@ var defaultStatsOptions = {
 	errorDetails: false
 }
 
-module.exports = function (options) {
+export default function (options) {
 	var config = options.config || options;
 	var entry = []
 	var entries = Object.create(null)

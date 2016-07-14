@@ -1,7 +1,7 @@
 
 import env from './env'
 
-module.exports = {
+export default {
 	sourcemaps: !env.inProduction,
 	production: env.inProduction,
 

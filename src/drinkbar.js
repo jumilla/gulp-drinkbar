@@ -28,7 +28,7 @@ const drinkbar = {
 
 
 drinkbar.task = (task, dependentTasks = []) => {
-	let builder =  new TaskBuilder(task, dependentTasks)
+	let builder =  new TaskBuilder(drinkbar, task, dependentTasks)
 
 	drinkbar.tasks[task] = builder
 
@@ -37,7 +37,7 @@ drinkbar.task = (task, dependentTasks = []) => {
 
 drinkbar.addBuilderMethod = (method, closure) => {
 	TaskBuilder.prototype[method] = function (...args) {
-		closure.apply(TaskBuilder, [drinkbar.plugins, this].concat(args))
+		closure.apply(TaskBuilder, [plugins, this].concat(args))
 		return this
 	}
 }
@@ -53,36 +53,6 @@ drinkbar.addBuilderMethod('define', ($, builder, closure = null) => {
 	$.gulp.task(builder.task, builder.dependentTasks, closure)
 })
 
-
-
-function addRecipe(method, recipe = null) {
-	if (!recipe) recipe = method
-	drinkbar.addBuilderMethod(method, require('./recipes/' + recipe))
-}
-
-addRecipe('copy')
-addRecipe('jade', 'pug')
-addRecipe('pug')
-addRecipe('stylus')
-addRecipe('sass')
-addRecipe('less')
-addRecipe('babel')
-addRecipe('coffeescript')
-addRecipe('typescript')
-addRecipe('riot')
-addRecipe('json5')
-addRecipe('cson')
-addRecipe('yaml')
-addRecipe('styles')
-addRecipe('scripts')
-addRecipe('browserify')
-addRecipe('webpack')
-//addRecipe('rollup')
-addRecipe('clean')
-addRecipe('browsersync')
-
-
-
 drinkbar.log = message => plugins.util.log(message)
 
 drinkbar.notify = (message, title = 'Gulp compile success!') => {
@@ -94,4 +64,4 @@ drinkbar.notify = (message, title = 'Gulp compile success!') => {
 
 
 
-module.exports = drinkbar
+export default drinkbar

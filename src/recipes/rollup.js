@@ -16,21 +16,22 @@ module.exports = function($, builder, parameters) {
 	util.checkParameterIsObject(parameters)
 	util.checkParameterHasOutput(parameters)
 
+	let config = $.config
 	let inputPaths = builder.resolvePaths(parameters.inputs || (parameters.input ? [parameters.input] : []))
 	let outputPath = builder.resolvePath(parameters.output)
 	let outputDirectory = $.path.dirname(outputPath)
 	let outputFileTitle = $.path.basename(outputPath)
 	let cleanPaths = builder.resolvePaths(parameters.cleans || (parameters.clean ? [parameters.clean] : []))
-	let taskConfig = parameters.config || {}
-	let config = util.extend($.config, taskConfig.autoprefixer ? {autoprefixer: taskConfig.autoprefixer} : {})
+	let taskConfig = util.extend(config.rollup, parameters.config || {}, {entry: inputPaths})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
+		if (!util.isPluginInstalled('rollup', 'rollup-stream')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		builder.trigger('before')
 
 		return $.gulp.src(inputPaths)
-			.pipe($.concat(outputFileTitle)
+			.pipe($.rollup(taskConfig)
 				.on('error', function (err) {
 					$.notify.onError({
 						title: 'Gulp compile failed',
@@ -41,13 +42,12 @@ module.exports = function($, builder, parameters) {
 					this.emit('end')
 				})
 			)
-			.pipe($.if(config.autoprefixer, $.autoprefixer(config.autoprefixer)))
 			.pipe($.notify({
 				title: 'Gulp compile success!',
 				message: '<%= file.relative %>',
 			}))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.init({ loadMaps: true })))
-			.pipe($.if(config.production, $.cleanCss(config.css.minifier)))
+			.pipe($.if(config.production, $.uglify(config.js.uglify)))
 			.pipe($.if(config.sourcemaps, $.sourcemaps.write('.')))
 			.pipe($.gulp.dest(outputDirectory))
 			.on('end', function () {
@@ -55,5 +55,7 @@ module.exports = function($, builder, parameters) {
 
 				builder.trigger('after')
 			})
+
+		return result
 	})
 }

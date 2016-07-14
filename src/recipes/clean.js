@@ -11,6 +11,8 @@ module.exports = function($, builder, filePatterns) {
 		filePatterns = [filePatterns]
 	}
 
+	filePatterns = builder.resolvePaths(filePatterns)
+
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(filePatterns)) return
 

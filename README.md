@@ -5,6 +5,8 @@
 gulp-drinkbarは、Gulpタスクをシンプルに見やすく記述できます。
 gulp-drinkbar helps write gulp tasks more simple and easier to read.
 
+##### gulpfile.js
+
 ```javascript
 var drinkbar = require('gulp-drinkbar')
 
@@ -31,7 +33,6 @@ drinkbar
 	.define()
 	.on('after', function () {
 		drinkbar.notify('Build finished.')
-		drinkbar.log('Build finished.')
 	})
 ```
 
@@ -85,9 +86,11 @@ gulp commands are used in gulp-drinkbar
 
 ### gulp
 
+`default`タスクを実行します。
+It runs `default` task
+
 .css と .js を生成するタスクでは、sourcemapも生成します。
 Additional sourcemap will be generated if your task includes compiling .css and/or .js file, a
-
 
 ### gulp --production
 
@@ -99,6 +102,10 @@ It runs minify files when the task includes compiling .css file.
 
 .jsを生成するタスクでは、uglifyを実行します。
 It runs uglify files when the task includes compiling .js file.
+
+### gulp --tasks
+
+定義されているGulpタスクの一覧を表示します。
 
 ### gulp `<task>`
 
@@ -240,13 +247,13 @@ drinkbar
 	.watch('resources/assets/**/bootstrap.*')
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules: Nothing
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
 
 ### pug (jade)
 
@@ -266,15 +273,15 @@ drinkbar
 	.watch('src/**/*.+(pug|jade)')
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules:
   - [Require] [gulp-pug](https://www.npmjs.com/package/gulp-pug)
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: Pug configuration.
       - See: https://github.com/jamen/gulp-pug#api
 
 ### stylus
@@ -295,18 +302,18 @@ drinkbar
 	.watch('src/**/*.styl')
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules:
   - [Require] [gulp-stylus](https://www.npmjs.com/package/gulp-stylus)
   - [Optional] [nib](https://www.npmjs.com/package/nib) if use `@import 'nib'`
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: Stylus configuration.
       - See: https://github.com/jescalan/accord/blob/master/docs/stylus.md
-    - [Optional] config.autoprefixer: Autoprefixerの設定
+    - [Optional] config.autoprefixer: Autoprefixer configuration.
       - See: https://github.com/postcss/autoprefixer#options
 
 ### sass
@@ -315,7 +322,6 @@ Sassファイルをコンパイルするレシピです。
 .cssファイルを生成します。
 To complie Sass file.
 
-`Compass` には対応していません。
 `Compass` is not available.
 
 ```javascript
@@ -334,17 +340,17 @@ drinkbar
 	.watch('resources/assets/sass/**/*.+(scss|sass)')
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules:
   - [Require] [gulp-sass](https://www.npmjs.com/package/gulp-sass)
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: Sassの設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: Sass configuration.
       - See: https://github.com/sass/node-sass#options
-    - [Optional] config.autoprefixer: Autoprefixerの設定
+    - [Optional] config.autoprefixer: Autoprefixer configuration.
       - See: https://github.com/postcss/autoprefixer#options
 
 ### less
@@ -367,17 +373,17 @@ drinkbar
 	.watch('resources/assets/less/**/*.less')
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules:
   - [Require] [gulp-less](https://www.npmjs.com/package/gulp-less)
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: Less configuration.
       - See: https://github.com/plus3network/gulp-less#options
-    - [Optional] config.autoprefixer: Autoprefixerの設定
+    - [Optional] config.autoprefixer: Autoprefixer configuration.
       - See: https://github.com/postcss/autoprefixer#options
 
 ### babel
@@ -412,14 +418,14 @@ To compile bable file.
 	})
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules: Nothing
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: Babel configuration.
       - See: https://babeljs.io/docs/usage/options/
 
 ### coffeescript
@@ -438,15 +444,15 @@ To compile coffeescript file
 	})
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules:
   - [Require] [gulp-coffee](https://www.npmjs.com/package/gulp-coffee)
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: CoffeeScript configuration.
       - see: http://coffeescript.org/
 
 ### typescript
@@ -465,15 +471,15 @@ To compile typescript file
 	})
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules:
   - [Require] [gulp-typescript](https://www.npmjs.com/package/gulp-typescript)
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: TypeScript configuration.
       - See: https://github.com/ivogabe/gulp-typescript#options
 
 ### json5
@@ -489,14 +495,14 @@ To compile json5 file
 	})
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules: Nothing
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: JSON5 configuration.
 
 ### cson
 
@@ -511,14 +517,14 @@ To compile cson file.
 	})
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules: Nothing
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: CSON configuration.
 
 ### yaml
 
@@ -533,14 +539,14 @@ To compile yaml file.
 	})
 ```
 
-- Recipe Type: 変換レシピ (compiling)
+- Recipe Type: Compiling recipe
 - Modules: Nothing
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ディレクトリパス (output directory path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Optional] output: output directory path. (default is `'.'`)
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: YAML configuration.
 
 ### styles
 
@@ -559,14 +565,13 @@ drinkbar
 	})
 	.watch('resources/assets/css/**/*.css')
 ```
-- Recipe Type: 結合レシピ (concatenating)
+- Recipe Type: Concatenating recipe
 - Modules: Nothing
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ファイルパス (output file path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Require] output: output file path.
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
 
 ### scripts
 
@@ -587,14 +592,13 @@ drinkbar
 	.watch('resources/assets/js/**/*.js')
 ```
 
-- Recipe Type: 結合レシピ (concatenating)
+- Recipe Type: Concatenating recipe
 - Modules: Nothing
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ファイルパス (output file path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Require] output: output file path.
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
 
 ### browserify
 
@@ -616,16 +620,16 @@ drinkbar
 	.watch('resources/assets/js/**/*.js')
 ```
 
-- Recipe Type: 結合レシピ (concatenating)
+- Recipe Type: Concatenating recipe
 - Modules:
   - [Require] [browserify](https://www.npmjs.com/package/browserify)
   - [Require] [babelify](https://www.npmjs.com/package/babelify)
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ファイルパス (output file path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Require] output: output file path.
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: Browserify configuration.
       - See: https://github.com/substack/node-browserify#browserifyfiles--opts
 
 ### webpack
@@ -648,16 +652,16 @@ drinkbar
 	.watch('resources/assets/js/**/*.js')
 ```
 
-- Recipe Type: 結合レシピ (concatenating)
+- Recipe Type: Concatenating recipe
 - Modules:
   - [Require] [webpack-stream](https://www.npmjs.com/package/webpack-stream)
   - [Optional] [babel-loader](https://www.npmjs.com/package/babel-loader) if needs compile es2015, react(.jsx), ...
 - Arguments:
   - [Require] 1. object
-    - [Require] input/inputs: 入力ファイルパス (input file path(s))
-    - [Require] output: 出力先ファイルパス (output file path)
-    - [Optional] clean/cleans: 削除ファイルパス
-    - [Optional] config: 設定
+    - [Require] input/inputs: input file path(s).
+    - [Require] output: output file path.
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: Webpack configuration.
       - See: https://webpack.github.io/docs/configuration.html
 
 ### clean
@@ -680,10 +684,10 @@ drinkbar
 	])
 ```
 
-- Recipe Type: 作業レシピ (working)
+- Recipe Type: Working recipe
 - Modules: Nothing
 - Arguments:
-	- [Require] 1. string / array[string]: 入力ファイルパス (list of inputs path(s))
+	- [Require] 1. string / array[string]: inputs file path(s).
 
 ### browsersync
 
@@ -703,14 +707,14 @@ drinkbar
 	})
 ```
 
-- Recipe Type: 作業レシピ (working)
+- Recipe Type: Working recipe
 - Modules:
   - [Require] [browser-sync](https://www.npmjs.com/package/browser-sync)
 - Arguments:
   - [Require] 1. object
-    - [Optional] config: 設定
+    - [Optional] config: BrowserSync configuration.
       - See: https://browsersync.io/docs/options
-    - [Optional] watch/watches: 監視ファイルパス (watch file path(s))
+    - [Optional] watch/watches: watch file path(s). (default is `[]`)
 
 
 

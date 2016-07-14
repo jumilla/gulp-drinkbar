@@ -2,9 +2,6 @@
 import env from './env'
 
 module.exports = {
-	sourceDirectory: 'assets',
-	outputDirectory: 'public',
-
 	sourcemaps: !env.inProduction,
 	production: env.inProduction,
 
@@ -57,6 +54,9 @@ module.exports = {
 	},
 
 	webpack: {
+	},
+
+	rollup: {
 	},
 
 	browserSync: {

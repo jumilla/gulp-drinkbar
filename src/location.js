@@ -1,21 +1,27 @@
 
-import _path from 'path'
+import path from 'path'
 
 
 
-class Location {
+export default class Location {
 
-	constructor(dir) {
-		this.base = process.cwd()
-		this.dir = dir
+	constructor(directoryPath = null) {
+		this.root = process.cwd()
+		this.current = directoryPath || this.root
 	}
 
-	relativePath(path) {
-		return _path.relative(this.base, _path.resolve(dir, path))
+	relativePath(_path) {
+		const ROOT_PREFIX = 'root:'
+
+		if (_path.lastIndexOf(ROOT_PREFIX, 0) === 0) {
+			_path = _path.slice(ROOT_PREFIX.length)
+			return path.relative(this.root, path.resolve(this.root, _path))
+		}
+		else {
+			return path.relative(this.root, path.resolve(this.current, _path))
+		}
 	}
 
 }
 
-
-
-module.exports = Location
+Location.root = new Location()

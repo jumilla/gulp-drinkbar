@@ -12,10 +12,12 @@ import util from '../util'
  *     .cleans : array
  *     .config : object
  */
-module.exports = function($, builder, parameters = {}) {
-	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
-	let outputDirectory = parameters.output
-	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
+module.exports = function($, builder, parameters) {
+	util.checkParameterIsObject(parameters)
+
+	let inputPaths = builder.resolvePaths(parameters.inputs || (parameters.input ? [parameters.input] : []))
+	let outputDirectory = builder.resolvePath(parameters.output || '.')
+	let cleanPaths = builder.resolvePaths(parameters.cleans || (parameters.clean ? [parameters.clean] : []))
 	let taskConfig = util.extend($.config.less, parameters.config || {})
 	let config = util.extend($.config, taskConfig.autoprefixer ? {autoprefixer: taskConfig.autoprefixer} : {})
 

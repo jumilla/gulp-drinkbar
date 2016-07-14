@@ -13,6 +13,18 @@ function extend(...objects) {
 	return objectAssign.apply(null, objects)
 }
 
+function checkParameterIsObject(parameters) {
+	if (!typeof parameters === '') {
+		throw Error('InvalidArgumentError: ' + 'must recipe parameters is object.')
+	}
+}
+
+function checkParameterHasOutput(parameters) {
+	if (!parameters.output) {
+		throw Error('InvalidArgumentError: ' + 'require "parameters.output".')
+	}
+}
+
 function isPluginInstalled(name, npmModule) {
 	if (!plugins[name]) {
 		log(chalk.red('Please install npm module ') + chalk.white.bgRed('"' + npmModule + '"') + chalk.red('.'))
@@ -45,6 +57,8 @@ function isValidGlobs(paths) {
 
 module.exports = {
 	extend: extend,
+	checkParameterIsObject: checkParameterIsObject,
+	checkParameterHasOutput: checkParameterHasOutput,
 	isPluginInstalled: isPluginInstalled,
 	isGlob: isGlob,
 	isValidGlobs: isValidGlobs,

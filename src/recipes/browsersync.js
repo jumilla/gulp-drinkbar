@@ -10,8 +10,10 @@ import util from '../util'
  *     .watches : array
  */
 module.exports = function($, builder, parameters) {
+	util.checkParameterIsObject(parameters)
+
 	let taskConfig = util.extend($.config.browserSync, parameters.config || {})
-	let watchPaths = parameters.watches || (parameters.watch ? [parameters.watch] : [])
+	let watchPaths = builder.resolvePaths(parameters.watches || (parameters.watch ? [parameters.watch] : []))
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isPluginInstalled('browserSync', 'browser-sync')) return

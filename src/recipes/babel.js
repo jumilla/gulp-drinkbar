@@ -13,10 +13,12 @@ import util from '../util'
  *     .config : object
  */
 module.exports = function($, builder, parameters) {
+	util.checkParameterIsObject(parameters)
+
 	let config = $.config
-	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
-	let outputDirectory = parameters.output
-	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
+	let inputPaths = builder.resolvePaths(parameters.inputs || (parameters.input ? [parameters.input] : []))
+	let outputDirectory = builder.resolvePath(parameters.output || '.')
+	let cleanPaths = builder.resolvePaths(parameters.cleans || (parameters.clean ? [parameters.clean] : []))
 	let taskConfig = util.extend(config.babel, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {

@@ -12,9 +12,11 @@ import util from '../util'
  *     .cleans : array
  */
 module.exports = function($, builder, parameters) {
-	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
-	let outputDirectory = parameters.output
-	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
+	util.checkParameterIsObject(parameters)
+
+	let inputPaths = builder.resolvePaths(parameters.inputs || (parameters.input ? [parameters.input] : []))
+	let outputDirectory = builder.resolvePath(parameters.output || '.')
+	let cleanPaths = builder.resolvePaths(parameters.cleans || (parameters.clean ? [parameters.clean] : []))
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
 		if (!util.isValidGlobs(inputPaths)) return

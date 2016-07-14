@@ -12,12 +12,16 @@ import util from '../util'
  *     .cleans : array
  *     .config : object
  */
-module.exports = function($, builder, parameters = {}) {
+module.exports = function($, builder, parameters) {
+	util.checkParameterIsObject(parameters)
+	util.checkParameterHasOutput(parameters)
+
 	let config = $.config
-	let inputPaths = parameters.inputs || (parameters.input ? [parameters.input] : [])
-	let outputDirectory = $.path.dirname(parameters.output)
-	let outputFileTitle = $.path.basename(parameters.output)
-	let cleanPaths = parameters.cleans || (parameters.clean ? [parameters.clean] : [])
+	let inputPaths = builder.resolvePaths(parameters.inputs || (parameters.input ? [parameters.input] : []))
+	let outputPath = builder.resolvePath(parameters.output)
+	let outputDirectory = $.path.dirname(outputPath)
+	let outputFileTitle = $.path.basename(outputPath)
+	let cleanPaths = builder.resolvePaths(parameters.cleans || (parameters.clean ? [parameters.clean] : []))
 	let taskConfig = util.extend(config.webpack, parameters.config || {})
 
 	taskConfig.output = {

@@ -39,6 +39,7 @@ const optionalPlugins = {
 	browserify: 'browserify',
 	babelify: 'babelify',
 	webpack: 'webpack-stream',
+	rollup: './streams/rollup',
 	browserSync: 'browser-sync',
 }
 

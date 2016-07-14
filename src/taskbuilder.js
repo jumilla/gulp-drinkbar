@@ -30,7 +30,8 @@ export default class TaskBuilder {
 		if (typeof patterns == 'string') {
 			patterns = [patterns]
 		}
-		drinkbar.watches[this.task] = patterns
+
+		drinkbar.watches[this.task] = this.resolvePaths(patterns)
 
 		return this
 	}

@@ -1,5 +1,7 @@
 # gulp-drinkbar
 
+[日本語](https://github.com/jumilla/gulp-drinkbar/blob/master/README-ja.md)
+
 ## Overview
 
 gulp-drinkbarは、Gulpタスクをシンプルに見やすく記述できます。

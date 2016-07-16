@@ -25,14 +25,13 @@ module.exports = function($, builder, parameters) {
 	let taskConfig = util.extend(config.browserify, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		if (!util.isPluginInstalled('browserify', 'browserify')) return
-		if (!util.isPluginInstalled('babelify', 'babelify')) return
+		if (!util.isPluginInstalled('browserify', 'gulp-drinkbar-browserify')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		builder.trigger('before')
 
 		return $.browserify(inputPaths, taskConfig)
-			.transform($.babelify, taskConfig.babelify)
+			.transform($.browserify.babelify, taskConfig.babelify)
 			.bundle()
 			.on('error', function (err) {
 				$.notify.onError({

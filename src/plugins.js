@@ -36,10 +36,9 @@ const optionalPlugins = {
 	json5: './streams/json5',
 	cson: './streams/cson',
 	yaml: './streams/yaml',
-	browserify: 'browserify',
-	babelify: 'babelify',
-	webpack: 'webpack-stream',
-	rollup: 'gulp-drinkbar-rollup-stream',
+	browserify: 'gulp-drinkbar-browserify',
+	webpack: 'gulp-drinkbar-webpack',
+	rollup: 'gulp-drinkbar-rollup',
 	browserSync: 'browser-sync',
 }
 

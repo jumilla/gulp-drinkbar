@@ -22,10 +22,10 @@ module.exports = function($, builder, parameters) {
 	let outputDirectory = $.path.dirname(outputPath)
 	let outputFileTitle = $.path.basename(outputPath)
 	let cleanPaths = builder.resolvePaths(parameters.cleans || (parameters.clean ? [parameters.clean] : []))
-	let taskConfig = util.extend(config.rollup, parameters.config || {}, {entry: inputPath, dest: outputPath})
+	let taskConfig = util.extend(config.rollup, {dest: outputFileTitle}, parameters.config || {})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		if (!util.isPluginInstalled('rollup', 'gulp-drinkbar-rollup-stream')) return
+		if (!util.isPluginInstalled('rollup', 'gulp-drinkbar-rollup')) return
 
 		builder.trigger('before')
 

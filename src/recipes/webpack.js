@@ -29,7 +29,7 @@ module.exports = function($, builder, parameters) {
 	}
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		if (!util.isPluginInstalled('webpack', 'webpack-stream')) return
+		if (!util.isPluginInstalled('webpack', 'gulp-drinkbar-webpack')) return
 		if (!util.isValidGlobs(inputPaths)) return
 
 		builder.trigger('before')

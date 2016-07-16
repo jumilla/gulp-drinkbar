@@ -39,7 +39,7 @@ const optionalPlugins = {
 	browserify: 'browserify',
 	babelify: 'babelify',
 	webpack: 'webpack-stream',
-	rollup: './streams/rollup',
+	rollup: 'gulp-drinkbar-rollup-stream',
 	browserSync: 'browser-sync',
 }
 

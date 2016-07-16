@@ -92,6 +92,12 @@ describe('gulp-drinkbar recipes', () => {
 		assert(recipe != null, 'webpack is null')
 	})
 
+	it('rollup recipe is valid', () => {
+		let recipe = require('../lib/recipes/rollup')
+
+		assert(recipe != null, 'rollup is null')
+	})
+
 	it('clean recipe is valid', () => {
 		let recipe = require('../lib/recipes/clean')
 

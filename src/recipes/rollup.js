@@ -6,7 +6,6 @@ import * as util from '../util'
  * builder : object(TaskBuilder)
  * parameters : object
  *     .input  : string
- *     .inputs : array
  *     .output : string
  *     .clean  : string
  *     .cleans : array
@@ -14,23 +13,23 @@ import * as util from '../util'
  */
 module.exports = function($, builder, parameters) {
 	util.checkParameterIsObject(parameters)
+	util.checkParameterHasInput(parameters)
 	util.checkParameterHasOutput(parameters)
 
 	let config = $.config
-	let inputPaths = builder.resolvePaths(parameters.inputs || (parameters.input ? [parameters.input] : []))
+	let inputPath = builder.resolvePath(parameters.input)
 	let outputPath = builder.resolvePath(parameters.output)
 	let outputDirectory = $.path.dirname(outputPath)
 	let outputFileTitle = $.path.basename(outputPath)
 	let cleanPaths = builder.resolvePaths(parameters.cleans || (parameters.clean ? [parameters.clean] : []))
-	let taskConfig = util.extend(config.rollup, parameters.config || {}, {entry: inputPaths})
+	let taskConfig = util.extend(config.rollup, parameters.config || {}, {entry: inputPath, dest: outputPath})
 
 	$.gulp.task(builder.task, builder.dependentTasks, () => {
-		if (!util.isPluginInstalled('rollup', 'rollup-stream')) return
-		if (!util.isValidGlobs(inputPaths)) return
+		if (!util.isPluginInstalled('rollup', 'gulp-drinkbar-rollup-stream')) return
 
 		builder.trigger('before')
 
-		return $.gulp.src(inputPaths)
+		return $.gulp.src(inputPath)
 			.pipe($.rollup(taskConfig)
 				.on('error', function (err) {
 					$.notify.onError({

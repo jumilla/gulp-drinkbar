@@ -26,7 +26,7 @@ addRecipe('styles')
 addRecipe('scripts')
 addRecipe('browserify')
 addRecipe('webpack')
-//addRecipe('rollup')
+addRecipe('rollup')
 addRecipe('clean')
 addRecipe('browsersync')
 

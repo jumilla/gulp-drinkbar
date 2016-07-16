@@ -1,6 +1,6 @@
 {
   "name": "gulp-drinkbar",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "author": {
     "name": "Fumio Furukawa"
   },
@@ -54,6 +54,7 @@
     "babel-cli": "^6.10.1",
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
+    "gulp-drinkbar-rollup": "^0.1.0",
     "mocha": "^2.5.3",
     "rimraf": "^2.5.3"
   },

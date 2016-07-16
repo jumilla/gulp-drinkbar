@@ -1,8 +1,4 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.main = factory());
-}(this, function () { 'use strict';
+define(function () { 'use strict';
 
 	function createCommonjsModule(fn, module) {
 		return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -109,17 +105,4 @@
 
 	return s1$1;
 
-}));
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(factory());
-}(this, function () { 'use strict';
-
-	var add = (x, y) => {
-		return x + y
-	}
-
-	console.log(add(3, 4))
-
-}));
+});

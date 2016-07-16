@@ -19,6 +19,12 @@ export function checkParameterIsObject(parameters) {
 	}
 }
 
+export function checkParameterHasInput(parameters) {
+	if (!parameters.output) {
+		throw Error('InvalidArgumentError: ' + 'require "parameters.input".')
+	}
+}
+
 export function checkParameterHasOutput(parameters) {
 	if (!parameters.output) {
 		throw Error('InvalidArgumentError: ' + 'require "parameters.output".')

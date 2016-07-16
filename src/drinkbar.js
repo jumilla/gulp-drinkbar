@@ -63,14 +63,14 @@ drinkbar.notify = (message, title = 'Gulp compile success!') => {
 	})
 }
 
-drinkbar.taskGroups = () => {
+drinkbar.taskGroups = (separator = ':') => {
 	const tree = []
 
 	for (const task in drinkbar.tasks) {
 		let sub = tree
 		let prefix = ''
-		task.split(':').forEach(part => {
-			if (prefix) prefix += ':'
+		task.split(separator).forEach(part => {
+			if (prefix) prefix += separator
 			prefix += part
 
 			if (!sub[prefix]) {

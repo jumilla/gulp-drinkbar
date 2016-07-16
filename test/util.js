@@ -1,10 +1,9 @@
 
 import {assert, expect, should} from 'chai'
+import * as util from '../lib/util'
 
 describe('gulp-drinkbar util', () => {
 	it('util.extend()', () => {
-		let util = require('../lib/util')
-
 		let base = {
 			a: 0,
 		}

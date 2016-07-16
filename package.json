@@ -60,7 +60,7 @@
   "scripts": {
     "build": "babel --presets=es2015 src -d lib --source-maps-inline",
     "watch": "babel --presets=es2015 src -d lib --source-maps-inline --watch",
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "mocha --compilers js:babel-core/register test test/streams"
   },
   "files": [
     "lib"

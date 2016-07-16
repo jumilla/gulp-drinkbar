@@ -7,25 +7,25 @@ import chalk from 'chalk'
 
 
 
-function extend(...objects) {
+export function extend(...objects) {
 	objects.unshift({})
 
 	return objectAssign.apply(null, objects)
 }
 
-function checkParameterIsObject(parameters) {
+export function checkParameterIsObject(parameters) {
 	if (!typeof parameters === '') {
 		throw Error('InvalidArgumentError: ' + 'must recipe parameters is object.')
 	}
 }
 
-function checkParameterHasOutput(parameters) {
+export function checkParameterHasOutput(parameters) {
 	if (!parameters.output) {
 		throw Error('InvalidArgumentError: ' + 'require "parameters.output".')
 	}
 }
 
-function isPluginInstalled(name, npmModule) {
+export function isPluginInstalled(name, npmModule) {
 	if (!plugins[name]) {
 		log(chalk.red('Please install npm module ') + chalk.white.bgRed('"' + npmModule + '"') + chalk.red('.'))
 		log(chalk.yellow('Install command is ') + chalk.green('"npm install ' + npmModule + ' --save-dev"'))
@@ -35,11 +35,11 @@ function isPluginInstalled(name, npmModule) {
 	return true
 }
 
-function isGlob(path) {
+export function isGlob(path) {
 	return path.match(/\*/)
 }
 
-function isValidGlobs(paths) {
+export function isValidGlobs(paths) {
 	try {
 		paths.forEach(path => {
 			if (!isGlob(path)) {
@@ -53,13 +53,4 @@ function isValidGlobs(paths) {
 		log(chalk.red(error.message))
 		return false
 	}
-}
-
-export default {
-	extend: extend,
-	checkParameterIsObject: checkParameterIsObject,
-	checkParameterHasOutput: checkParameterHasOutput,
-	isPluginInstalled: isPluginInstalled,
-	isGlob: isGlob,
-	isValidGlobs: isValidGlobs,
 }

@@ -1,5 +1,5 @@
 
-import util from '../util'
+import * as util from '../util'
 
 /**
  * $ : object(plugins)

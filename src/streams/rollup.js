@@ -1,144 +1,49 @@
 
-const PLUGIN_NAME = 'rollup-stream'
+const PLUGIN_NAME = 'drinkbar-stream-rollup'
 
-var rollup = require('rollup')
-var gutil = require('gulp-util')
-var File = require('vinyl')
-var MemoryFileSystem = require('memory-fs')
-var through = require('through')
-var some = require('lodash.some')
+import through from 'through2'
+import gutil from 'gulp-util'
+import rollup from 'rollup'
+import {extend} from '../util'
+import File from 'vinyl'
 
-var defaultStatsOptions = {
-	colors: gutil.colors.supportsColor,
-	hash: false,
-	timings: false,
-	chunks: false,
-	chunkModules: false,
-	modules: false,
-	children: true,
-	version: true,
-	cached: false,
-	cachedAssets: false,
-	reasons: false,
-	source: false,
-	errorDetails: false
-}
-
-module.exports = function (options) {
-	var config = options.config || options;
-	var entry = []
-	var entries = Object.create(null)
-
-	var stream = through(function (file) {
+module.exports = function (options = {}) {
+	const transform = function (file, encode, done) {
 		if (file.isNull()) {
-			return
+			this.push(file)
+			done()
 		}
-		if ('named' in file) {
-			if (!Array.isArray(entries[file.named])) {
-				entries[file.named] = []
-			}
-			entries[file.named].push(file.path)
-		} else {
-			entry = entry || []
-			entry.push(file.path)
+		else if (file.isStream()) {
+			this.emit('error', new gutil.PluginError(PLUGIN_NAME, 'Streaming not supported'));
+			done()
 		}
-	}, function () {
-		var self = this
-		var handleConfig = function (config) {
-			config.output = config.output || {}
-			config.watch = !!options.watch
+		else {
+			const rollupOptions = extend({entry: file.path}, options)
+			const bundleOptions = extend({format: 'iife'}, options)
 
-			// Determine pipe'd in entry
-			if (Object.keys(entries).length > 0) {
-				entry = entries
-				if (!config.output.filename) {
-					// Better output default for multiple chunks
-					config.output.filename = '[name].js'
-				}
-			} else if (entry.length < 2) {
-				entry = entry[0] || entry
-			}
+			rollup.rollup(rollupOptions)
+				.then(bundle => {
+					const result = bundle.generate(bundleOptions)
+console.log(result)
 
-			config.entry = config.entry || entry
-			config.output.path = config.output.path || process.cwd()
-			config.output.filename = config.output.filename || '[hash].js'
-			config.watch = options.watch
-			entry = []
+					file.content = new Buffer(result.code)
+					file.sourcemap = result.map
 
-			if (!config.entry || config.entry.length < 1) {
-				gutil.log(PLUGIN_NAME + '- No files given aborting compilation')
-				self.emit('end')
-				return false
-			}
-			return true
-		}
-
-		if (!handleConfig(config)) {
-			return false
-		}
-
-		var compiler = rollup.rollup(config, function (err, stats) {
-			if (err) {
-				self.emit('error', new gutil.PluginError(PLUGIN_NAME, err))
-			}
-			var jsonStats = stats.toJson() || {}
-			var errors = jsonStats.errors || []
-			if (errors.length) {
-				var errorMessage = errors.reduce(function (resultMessage, nextError) {
-					resultMessage += nextError.toString()
-					return resultMessage
-				}, '')
-				self.emit('error', new gutil.PluginError(PLUGIN_NAME, errorMessage))
-			}
-		})
-
-		var handleCompiler = function (compiler) {
-			if (options.progress) {
-				compiler.apply(new ProgressPlugin(function (percentage, msg) {
-					percentage = Math.floor(percentage * 100)
-					msg = percentage + '% ' + msg
-					if (percentage < 10) msg = ' ' + msg
-					gutil.log('rollup', msg)
-				}))
-			}
-
-			var fs = compiler.outputFileSystem = new MemoryFileSystem()
-
-			compiler.plugin('after-emit', function (compilation, callback) {
-				Object.keys(compilation.assets).forEach(function (outname) {
-					if (compilation.assets[outname].emitted) {
-						var file = prepareFile(fs, compiler, outname)
-						self.queue(file)
-					}
+					this.push(file)
+					done()
 				})
-				callback()
-			})
+				.catch(e => {
+					this.emit('error', new gutil.PluginError(PLUGIN_NAME, e.message));
+					done()
+				})
 		}
-
-		handleCompiler(compiler)
-	})
-
-	// If entry point manually specified, trigger that
-	if (config.entry) {
-		stream.end()
 	}
 
-	return stream
-}
+	const flush = function(done) {
+		console.log('flush')
 
-function prepareFile (fs, compiler, outname) {
-	var path = fs.join(compiler.outputPath, outname)
-	if (path.indexOf('?') !== -1) {
-		path = path.split('?')[0]
+		done()
 	}
 
-	var contents = fs.readFileSync(path)
-
-	var file = new File({
-		base: compiler.outputPath,
-		path: path,
-		contents: contents
-	})
-	return file
+	return through.obj(transform, flush)
 }
-

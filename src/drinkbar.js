@@ -7,14 +7,15 @@ import notifier from 'node-notifier'
 
 
 
-plugins.config = config
+const $ = plugins
+$.config = config
 
 
 
 const drinkbar = {
 	config: config,
 
-	plugins: plugins,
+	plugins: $,
 
 	location(directoryPath) {
 		return new Location(directoryPath)
@@ -37,7 +38,7 @@ drinkbar.task = (task, dependentTasks = []) => {
 
 drinkbar.addBuilderMethod = (method, closure) => {
 	TaskBuilder.prototype[method] = function (...args) {
-		closure.apply(TaskBuilder, [plugins, this].concat(args))
+		closure.apply(TaskBuilder, [$, this].concat(args))
 		return this
 	}
 }
@@ -53,13 +54,54 @@ drinkbar.addBuilderMethod('define', ($, builder, closure = null) => {
 	$.gulp.task(builder.task, builder.dependentTasks, closure)
 })
 
-drinkbar.log = message => plugins.util.log(message)
+drinkbar.log = message => $.util.log(message)
 
 drinkbar.notify = (message, title = 'Gulp compile success!') => {
 	notifier.notify({
 		title: title,
 		message: message,
 	})
+}
+
+drinkbar.taskGroups = () => {
+	const tree = []
+
+	for (const task in drinkbar.tasks) {
+		let sub = tree
+		let prefix = ''
+		task.split(':').forEach(part => {
+			if (prefix) prefix += ':'
+			prefix += part
+
+			if (!sub[prefix]) {
+				sub[prefix] = {}
+			}
+			sub = sub[prefix]
+		})
+	}
+
+	let addTask = (tree) => {
+		for (const task in tree) {
+			// Do not define if already exists
+			if (drinkbar.tasks[task]) continue
+
+			const keys = object => {
+				const result = []
+				for (const key in object) {
+					result.push(key)
+				}
+				return result
+			}
+
+			const dependentTasks = keys(tree[task])
+
+			$.gulp.task(task, dependentTasks, () => {})
+
+			addTask(tree[task])
+		}
+	}
+
+	addTask(tree)
 }
 
 

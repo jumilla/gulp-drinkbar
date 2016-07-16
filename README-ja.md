@@ -77,7 +77,7 @@ drinkbar
 
 ## コマンド
 
-あたなが使い慣れている `gulp` コマンドをそのまま使用できます。
+あなたが使い慣れている `gulp` コマンドをそのまま使用できます。
 
 ### gulp
 
@@ -580,8 +580,7 @@ drinkbar
 
 - Recipe Type: 結合レシピ
 - Modules:
-  - [Require] [browserify](https://www.npmjs.com/package/browserify)
-  - [Require] [babelify](https://www.npmjs.com/package/babelify)
+  - [Require] [gulp-drinkbar-browserify](https://www.npmjs.com/package/gulp-drinkbar-browserify)
 - Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス
@@ -611,8 +610,7 @@ drinkbar
 
 - Recipe Type: 結合レシピ
 - Modules:
-  - [Require] [webpack-stream](https://www.npmjs.com/package/webpack-stream)
-  - [Optional] [babel-loader](https://www.npmjs.com/package/babel-loader) if needs compile es2015, react(.jsx), ...
+  - [Require] [gulp-drinkbar-webpack](https://www.npmjs.com/package/gulp-drinkbar-webpack)
 - Arguments:
   - [Require] 1. object
     - [Require] input/inputs: 入力ファイルパス
@@ -620,6 +618,34 @@ drinkbar
     - [Optional] clean/cleans: 削除ファイルパス (デフォルト: `[]`)
     - [Optional] config: Webpackの設定: (デフォルト: `{}`)
       - See: https://webpack.github.io/docs/configuration.html
+
+### rollup
+
+`rollup`を使ってES2015形式のスクリプトをビルドし、さまざまな形式の.jsファイルを生成します。
+プラグインは`rollup-plugin-node-resolve`と`rollup-plugin-commonjs`が有効になっています。
+Babelを使いたい場合は、config.plugins を指定してください。
+
+```javascript
+drinkbar
+	.task('scripts:app')
+	.rollup({
+		input: 'resources/assets/js/app.js',
+		output: 'public/assets/app.js',
+		config: {},
+	})
+	.watch('resources/assets/js/**/*.js')
+```
+
+- Recipe Type: 結合レシピ
+- Modules:
+  - [Require] [gulp-drinkbar-rollup](https://www.npmjs.com/package/gulp-drinkbar-rollup)
+- Arguments:
+  - [Require] 1. object
+    - [Require] input: 入力ファイルパス
+    - [Require] output: 出力先ファイルパス
+    - [Optional] clean/cleans: 削除ファイルパス (デフォルト: `[]`)
+    - [Optional] config: Rollupの設定: (デフォルト: `{format: 'umd', moduleName: 'main'}`)
+	  - See: https://github.com/rollup/rollup/wiki/JavaScript-API#rolluprollup-options-
 
 ### clean
 

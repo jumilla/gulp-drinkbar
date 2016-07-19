@@ -41,7 +41,7 @@ drinkbar
 ## Getting Started
 
 gulp-drinkbarの動作環境は次の通りです。
-gulp-drinkbar requires are below...
+gulp-drinkbar requires below
 
 | Module        | Version       |
 | ------------- | ------------- |
@@ -77,9 +77,10 @@ drinkbar
 
 [2] Run command `gulp`.
 
-That's OK!
+That's All!
 
 サンプルをもっと見たければ、[gulp-drinkbar-examples](http://github.com/jumilla/gulp-drinkbar-examples)をダウンロードしてください。
+To check more examples please download [gulp-drinkbar-examples](http://github.com/jumilla/gulp-drinkbar-examples).
 
 ## Commands
 
@@ -108,6 +109,7 @@ It runs uglify files when the task includes compiling .js file.
 ### gulp --tasks
 
 定義されているGulpタスクの一覧を表示します。
+To show gulp tasks that you can use in gulp-drinkbar
 
 ### gulp `<task>`
 
@@ -137,14 +139,13 @@ drinkbar
 ```
 
 `{task}` には任意のGulpタスク名を指定します。
+Your gulp task name is written in `{task}`.
 
 `{recipe}` には、後述するレシピ関数を指定します。
 レシピ関数にはオブジェクト形式でパラメーターを指定できます。
-
-You can put designated functions (described in the recipe section below) in `{recipe}`
+You can put your functions (described in the recipe section below) in `{recipe}`
 
 ES2015で記述したい場合は、`.babelrc` ファイルを用意し、`gulpfile.js` の代わりに `gulpfile.babel.js` というファイル名を使います。
-
 If you write task by using ES2015, it needs to be written in `.babelrc` file. And rename the `gulpfile.js` to `gulpfile.bable.js`.
 
 ##### .bablerc
@@ -206,10 +207,9 @@ Wildcard (Glob) can be used to specify file pattern.
 
 ### Task Group
 
-To define task group.
-
 タスクをグループ化するには、
 drinkbar.task() の第2引数に依存タスクを指定し、何もしないタスクを定義してください。
+To define task group, create new task with dependency tasks in array.
 
 ```javascript
 drinkbar
@@ -218,23 +218,21 @@ drinkbar
 ```  		  
 
 コマンド `gulp scripts` を実行すると、`script:libs`タスクと`script:app`タスクが実行されます。
-
+`script:libs` and `script:app` will run when you hit `gulp scripts`.
 
 
 ## Recipes
 
 指定したgulpタスクで行わせるよくある処理を関数化したものを、レシピと呼んでいます。
-
 Recipes are functions that includes gulp tasks used frequently. 
 
 レシピには、指定したソースファイルリストの一つ一つに対して処理を行わせる「変換レシピ」と、指定したソースファイルリストから一つのファイルを生成する「結合レシピ」、その他ファイルを生成しない「作業レシピ」があります。
-
-Recipes include "compiling" which compile selected file, "concatenating" files, and "work".
+Recipes include "compiling recipe" which compile selected file, "concatenating recipe" files which concatenate files into one file, and "work recipe" which doesn't generate any files.
 
 ### copy
 
 ファイルを単純にコピーするレシピです。
-To copy file simply.
+To copy file.
 
 ```javascript
 drinkbar
@@ -261,7 +259,7 @@ drinkbar
 
 pug(jade)ファイルをコンパイルするレシピです。
 .htmlファイルを生成します。
-To compile pug (jade) file.
+To compile pug (jade) file and generate .html file.
 
 ```javascript
 drinkbar
@@ -290,7 +288,7 @@ drinkbar
 
 Stylusファイルをコンパイルするレシピです。
 .cssファイルを生成します。
-To compile stylus file.
+To compile stylus file and generate .css file.
 
 ```javascript
 drinkbar
@@ -322,7 +320,7 @@ drinkbar
 
 Sassファイルをコンパイルするレシピです。
 .cssファイルを生成します。
-To complie Sass file.
+To complie Sass file and generate css file.
 
 `Compass` is not available.
 
@@ -359,7 +357,7 @@ drinkbar
 
 lessファイルをコンパイルするレシピです。
 .cssファイルを生成します。
-To compile less file.
+To compile less file and generate .css file
 
 ```javascript
 drinkbar
@@ -394,7 +392,8 @@ babelを使ってJavaScriptをコンパイルするレシピです。
 プリセットを指定することで、ES2015やJSXをコンパイルできます。
 .jsファイルを生成します。
 
-To compile bable file.
+To compile bable file and generate .js file.
+It compile selected presets file such as ES2015 or JSX.
 
 ```javascript
 .babel({
@@ -434,7 +433,7 @@ To compile bable file.
 
 CoffeeScriptファイルをコンパイルするレシピです。
 .jsファイルを生成します。
-To compile coffeescript file
+To compile coffeescript file and generate .js file.
 
 ```javascript
 .coffeescript({
@@ -461,7 +460,7 @@ To compile coffeescript file
 
 TypeScriptファイルをコンパイルするレシピです。
 .jsファイルを生成します。
-To compile typescript file
+To compile typescript file and generate .js file.
 
 ```javascript
 .typescript({
@@ -488,7 +487,7 @@ To compile typescript file
 
 JSON5ファイルをコンパイルするレシピです。
 .jsonファイルを生成します。
-To compile json5 file
+To compile json5 file and generate .json file.
 
 ```javascript
 .json5({
@@ -510,7 +509,7 @@ To compile json5 file
 
 CSONファイルをコンパイルするレシピです。
 .jsonファイルを生成します。
-To compile cson file.
+To compile cson file and generate .json file.
 
 ```javascript
 .cson({
@@ -532,7 +531,7 @@ To compile cson file.
 
 YAMLファイルをコンパイルするレシピです。
 .jsonファイルを生成します。
-To compile yaml file.
+To compile yaml file and generate .json file.
 
 ```javascript
 .yaml({
@@ -607,6 +606,7 @@ drinkbar
 `browserify`を使って複数のスクリプトを連結し、Webブラウザで実行できる単一の.jsファイルを生成します。
 `babelify`で、ES2015やJSX形式のスクリプトをコンパイルすることもできます。
 To combine scripts into one by using `browserify`.
+scripts that written by using ES2015 and JSX type can be compiled.
 
 ```javascript
 drinkbar
@@ -639,6 +639,7 @@ drinkbar
 `webpack`を使って複数のスクリプトを連結し、Webブラウザで実行できる単一の.jsファイルを生成します。
 `babel-loader`で、ES2015やJSX形式のスクリプトをコンパイルすることもできます。
 To combine scripts into one by using `webpack`.
+scripts that written by using ES2015 and JSX type can be compiled.
 
 ```javascript
 drinkbar
@@ -669,7 +670,7 @@ drinkbar
 ### clean
 
 指定のフォルダ、ファイルを削除します。
-To erase designated files and/or directories
+To erase selected files and/or directories
 
 ```javascript
 drinkbar
@@ -694,9 +695,11 @@ drinkbar
 ### browsersync
 
 `browser-sync`を使って、ライブリロードが可能なWebサーバーを立てることができます。
+You can run local web server that can auto-reload the page by using `browser-sync`.
 
 watchにファイルパターンを指定すると、対象ファイルが更新されるたびに閲覧している  
 ページがリロードされるようになります。
+Put specific file pattern to `watch` so that the web page will auto-reloads when you save it.
 
 ```javascript
 drinkbar
@@ -725,6 +728,7 @@ drinkbar
 ### drinkbar.task(task : string, dependentTasks : array) : TaskBuilder
 
 タスクビルダーを生成します。
+create task builder
 
 ##### Arguments
 
@@ -738,6 +742,7 @@ drinkbar
 ### TaskBuilder#{recipe}(...parameters) : TaskBuilder
 
 指定のレシピでGulpタスクを作成します。
+create gulp task with selected recipes
 
 ##### Arguments
 
@@ -762,6 +767,7 @@ drinkbar
 ### TaskBuilder#on('before', callback : function) : TaskBuilder
 
 Gulpタスク実行前のイベントを受け取ります。
+get event that before gulp task runs
 
 ##### Arguments
 
@@ -774,6 +780,7 @@ Gulpタスク実行前のイベントを受け取ります。
 ### TaskBuilder#on('after', callback : function) : TaskBuilder
 
 Gulpタスク実行後のイベントを受け取ります。
+get event that after gulp task runs
 
 ##### Arguments
 
@@ -786,6 +793,7 @@ Gulpタスク実行後のイベントを受け取ります。
 ### TaskBuilder#watch(patterns : string|array) : TaskBuilder
 
 監視するファイルパターンをGlob形式で指定し、Gulpタスクに関連付けます。
+select watch file pattern by Glob and link it to gulp task
 
 ##### Arguments
 
@@ -798,8 +806,10 @@ Gulpタスク実行後のイベントを受け取ります。
 ### drinkbar.notify(message : string, title : string) : void
 
 プラットフォームに通知を送ります。
+push notification to platform
 
 同じ内容をコンソールにもログ出力します。
+print message to the console
 
 ##### Arguments
 
@@ -809,12 +819,16 @@ Gulpタスク実行後のイベントを受け取ります。
 ##### Return
 
 ありません。
+none
 
 ### drinkbar.log(message : string) : void
 
 コンソールにログ出力します。
+print message to the console
+
 
 `chalk` ライブラリを使って色をつけることもできます。
+you can set colors by using `chalk` library
 
 ##### Arguments
 
@@ -823,6 +837,7 @@ Gulpタスク実行後のイベントを受け取ります。
 ##### Return
 
 ありません。
+none
 
 
 

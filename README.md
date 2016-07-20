@@ -4,7 +4,6 @@
 
 ## Overview
 
-gulp-drinkbarは、Gulpタスクをシンプルに見やすく記述できます。
 gulp-drinkbar helps write gulp tasks more simple and easier to read.
 
 ##### gulpfile.js
@@ -40,7 +39,6 @@ drinkbar
 
 ## Getting Started
 
-gulp-drinkbarの動作環境は次の通りです。
 gulp-drinkbar requires below
 
 | Module        | Version       |
@@ -79,53 +77,42 @@ drinkbar
 
 That's All!
 
-サンプルをもっと見たければ、[gulp-drinkbar-examples](http://github.com/jumilla/gulp-drinkbar-examples)をダウンロードしてください。
 To check more examples please download [gulp-drinkbar-examples](http://github.com/jumilla/gulp-drinkbar-examples).
 
 ## Commands
 
-あたなが使い慣れている `gulp` コマンドをそのまま使用できます。
-gulp commands are used in gulp-drinkbar
+gulp commands are used in gulp-drinkbar.
 
 ### gulp
 
-`default`タスクを実行します。
 It runs `default` task
 
-.css と .js を生成するタスクでは、sourcemapも生成します。
-Additional sourcemap will be generated if your task includes compiling .css and/or .js file, a
+Additional sourcemap will be generated if your task includes compiling .css and/or .js file.
 
 ### gulp --production
 
-`default`タスクを実行します。
-It runs `default` task
+It runs `default` task.
 
-.cssを生成するタスクでは、minifyを実行します。
 It runs minify files when the task includes compiling .css file.
 
-.jsを生成するタスクでは、uglifyを実行します。
 It runs uglify files when the task includes compiling .js file.
 
 ### gulp --tasks
 
-定義されているGulpタスクの一覧を表示します。
-To show gulp tasks that you can use in gulp-drinkbar
+To show gulp tasks that you can.
 
 ### gulp `<task>`
 
-`<task>`で指定したgulpタスクを実行します。
 It runs specific `<task>`.
 
 ### gulp watch
 
-タスクに指定されたファイルパターンを監視し、変更を検知した時点でタスクを実行します。
 As you write code and modify your files, this command will listen for changes and automatically run designated tasks.
 
 
 
 ## Task Definition
 
-Gulpタスクは `gulpfile.js` に記述します。
 Your gulp tasks are written in `gulpfile.js`
 
 ##### gulpfile.js
@@ -138,14 +125,10 @@ drinkbar
 	.{recipe}({})
 ```
 
-`{task}` には任意のGulpタスク名を指定します。
 Your gulp task name is written in `{task}`.
 
-`{recipe}` には、後述するレシピ関数を指定します。
-レシピ関数にはオブジェクト形式でパラメーターを指定できます。
-You can put your functions (described in the recipe section below) in `{recipe}`
+You can put your functions (described in the recipe section below) in `{recipe}`.
 
-ES2015で記述したい場合は、`.babelrc` ファイルを用意し、`gulpfile.js` の代わりに `gulpfile.babel.js` というファイル名を使います。
 If you write task by using ES2015, it needs to be written in `.babelrc` file. And rename the `gulpfile.js` to `gulpfile.bable.js`.
 
 ##### .bablerc
@@ -168,12 +151,9 @@ drinkbar
 
 
 ### Passing File Path
- 入力ファイルの指定方法
 
-レシピ関数のパラメーターに入力ファイルパスを指定する方法は2つあります。
 You can pass file paths to parameter in two ways.
 
-単一ファイルパスもしくはファイルパターンを指定するには、.inputを使います。
 To pass one file or file pattern to task, use `input:`.
 
 ```javascript
@@ -182,7 +162,6 @@ To pass one file or file pattern to task, use `input:`.
 }
 ```
 
-複数ファイルパスもしくはファイルパターンを指定するには、.inputsを使います。
 To pass multiple files or file patterns, use `inputs:`.
 
 ```javascript
@@ -194,7 +173,6 @@ To pass multiple files or file patterns, use `inputs:`.
 }
 ```
  
-ファイルをファイルパターン（Glob形式）で指定することもできます。
 Wildcard (Glob) can be used to specify file pattern.
 
 ```javascript
@@ -207,8 +185,6 @@ Wildcard (Glob) can be used to specify file pattern.
 
 ### Task Group
 
-タスクをグループ化するには、
-drinkbar.task() の第2引数に依存タスクを指定し、何もしないタスクを定義してください。
 To define task group, create new task with dependency tasks in array.
 
 ```javascript
@@ -217,21 +193,17 @@ drinkbar
 	.define()
 ```  		  
 
-コマンド `gulp scripts` を実行すると、`script:libs`タスクと`script:app`タスクが実行されます。
 `script:libs` and `script:app` will run when you hit `gulp scripts`.
 
 
 ## Recipes
 
-指定したgulpタスクで行わせるよくある処理を関数化したものを、レシピと呼んでいます。
 Recipes are functions that includes gulp tasks used frequently. 
 
-レシピには、指定したソースファイルリストの一つ一つに対して処理を行わせる「変換レシピ」と、指定したソースファイルリストから一つのファイルを生成する「結合レシピ」、その他ファイルを生成しない「作業レシピ」があります。
 Recipes include "compiling recipe" which compile selected file, "concatenating recipe" files which concatenate files into one file, and "work recipe" which doesn't generate any files.
 
 ### copy
 
-ファイルを単純にコピーするレシピです。
 To copy file.
 
 ```javascript
@@ -257,8 +229,6 @@ drinkbar
 
 ### pug (jade)
 
-pug(jade)ファイルをコンパイルするレシピです。
-.htmlファイルを生成します。
 To compile pug (jade) file and generate .html file.
 
 ```javascript
@@ -286,8 +256,6 @@ drinkbar
 
 ### stylus
 
-Stylusファイルをコンパイルするレシピです。
-.cssファイルを生成します。
 To compile stylus file and generate .css file.
 
 ```javascript
@@ -318,8 +286,6 @@ drinkbar
 
 ### sass
 
-Sassファイルをコンパイルするレシピです。
-.cssファイルを生成します。
 To complie Sass file and generate css file.
 
 `Compass` is not available.
@@ -355,8 +321,6 @@ drinkbar
 
 ### less
 
-lessファイルをコンパイルするレシピです。
-.cssファイルを生成します。
 To compile less file and generate .css file
 
 ```javascript
@@ -387,10 +351,6 @@ drinkbar
       - See: https://github.com/postcss/autoprefixer#options
 
 ### babel
-
-babelを使ってJavaScriptをコンパイルするレシピです。
-プリセットを指定することで、ES2015やJSXをコンパイルできます。
-.jsファイルを生成します。
 
 To compile bable file and generate .js file.
 It compile selected presets file such as ES2015 or JSX.
@@ -431,8 +391,6 @@ It compile selected presets file such as ES2015 or JSX.
 
 ### coffeescript
 
-CoffeeScriptファイルをコンパイルするレシピです。
-.jsファイルを生成します。
 To compile coffeescript file and generate .js file.
 
 ```javascript
@@ -458,8 +416,6 @@ To compile coffeescript file and generate .js file.
 
 ### typescript
 
-TypeScriptファイルをコンパイルするレシピです。
-.jsファイルを生成します。
 To compile typescript file and generate .js file.
 
 ```javascript
@@ -485,8 +441,6 @@ To compile typescript file and generate .js file.
 
 ### json5
 
-JSON5ファイルをコンパイルするレシピです。
-.jsonファイルを生成します。
 To compile json5 file and generate .json file.
 
 ```javascript
@@ -507,8 +461,6 @@ To compile json5 file and generate .json file.
 
 ### cson
 
-CSONファイルをコンパイルするレシピです。
-.jsonファイルを生成します。
 To compile cson file and generate .json file.
 
 ```javascript
@@ -529,8 +481,6 @@ To compile cson file and generate .json file.
 
 ### yaml
 
-YAMLファイルをコンパイルするレシピです。
-.jsonファイルを生成します。
 To compile yaml file and generate .json file.
 
 ```javascript
@@ -551,7 +501,6 @@ To compile yaml file and generate .json file.
 
 ### styles
 
-複数のスタイルシートを連結し、単一の.cssファイルを生成します。
 To concatenates style sheets and saves the output.
 
 ```javascript
@@ -576,7 +525,6 @@ drinkbar
 
 ### scripts
 
-複数のスクリプトを連結し、単一の.jsファイルを生成します。
 To concatenates scripts and saves the output
 
 ```javascript
@@ -603,8 +551,6 @@ drinkbar
 
 ### browserify
 
-`browserify`を使って複数のスクリプトを連結し、Webブラウザで実行できる単一の.jsファイルを生成します。
-`babelify`で、ES2015やJSX形式のスクリプトをコンパイルすることもできます。
 To combine scripts into one by using `browserify`.
 scripts that written by using ES2015 and JSX type can be compiled.
 
@@ -636,8 +582,6 @@ drinkbar
 
 ### webpack
 
-`webpack`を使って複数のスクリプトを連結し、Webブラウザで実行できる単一の.jsファイルを生成します。
-`babel-loader`で、ES2015やJSX形式のスクリプトをコンパイルすることもできます。
 To combine scripts into one by using `webpack`.
 scripts that written by using ES2015 and JSX type can be compiled.
 
@@ -667,9 +611,36 @@ drinkbar
     - [Optional] config: Webpack configuration.
       - See: https://webpack.github.io/docs/configuration.html
 
+### rollup
+
+Build the ES2015 format of the script using the `rollup`, to generate a .js file in a variety of formats.
+The plug-in is enabled by `rollup-plugin-node-resolve` and` rollup-plugin-commonjs`.
+If you want to use Babel, please specify the config.plugins.
+
+```javascript
+drinkbar
+	.task('scripts:app')
+	.rollup({
+		input: 'resources/assets/js/app.js',
+		output: 'public/assets/app.js',
+		config: {},
+	})
+	.watch('resources/assets/js/**/*.js')
+```
+
+- Recipe Type: 結合レシピ
+- Modules:
+  - [Require] [gulp-drinkbar-rollup](https://www.npmjs.com/package/gulp-drinkbar-rollup)
+- Arguments:
+  - [Require] 1. object
+    - [Require] input: input file path.
+    - [Require] output: output file path.
+    - [Optional] clean/cleans: cleanup file path(s). (default is `[]`)
+    - [Optional] config: Rollup configuration: (default: `{format: 'umd', moduleName: 'main'}`)
+	  - See: https://github.com/rollup/rollup/wiki/JavaScript-API#rolluprollup-options-
+
 ### clean
 
-指定のフォルダ、ファイルを削除します。
 To erase selected files and/or directories
 
 ```javascript
@@ -694,11 +665,8 @@ drinkbar
 
 ### browsersync
 
-`browser-sync`を使って、ライブリロードが可能なWebサーバーを立てることができます。
 You can run local web server that can auto-reload the page by using `browser-sync`.
 
-watchにファイルパターンを指定すると、対象ファイルが更新されるたびに閲覧している  
-ページがリロードされるようになります。
 Put specific file pattern to `watch` so that the web page will auto-reloads when you save it.
 
 ```javascript
@@ -727,8 +695,7 @@ drinkbar
 
 ### drinkbar.task(task : string, dependentTasks : array) : TaskBuilder
 
-タスクビルダーを生成します。
-create task builder
+create task builder.
 
 ##### Arguments
 
@@ -741,8 +708,7 @@ create task builder
 
 ### TaskBuilder#{recipe}(...parameters) : TaskBuilder
 
-指定のレシピでGulpタスクを作成します。
-create gulp task with selected recipes
+create gulp task with selected recipes.
 
 ##### Arguments
 
@@ -754,95 +720,87 @@ create gulp task with selected recipes
 
 ### TaskBuilder#define(closure : function($, builder, ...parameters) = null) : TaskBuilder
 
-指定のロジックでGulpタスクを作成します。
+Make a Gulp task with the specified logic.
 
 ##### Arguments
 
-- closure : function($, builder, ...parameters) : 定義関数
+- closure : function($, builder, ...parameters) : Definition function
 
 ##### Return
 
-- TaskBuilder : タスクビルダー
+- TaskBuilder : task builder
 
 ### TaskBuilder#on('before', callback : function) : TaskBuilder
 
-Gulpタスク実行前のイベントを受け取ります。
-get event that before gulp task runs
+get event that before gulp task runs.
 
 ##### Arguments
 
-- callback : function() : コールバック関数
+- callback : function() : callback function
 
 ##### Return
 
-- TaskBuilder : タスクビルダー
+- TaskBuilder : task builder
 
 ### TaskBuilder#on('after', callback : function) : TaskBuilder
 
-Gulpタスク実行後のイベントを受け取ります。
-get event that after gulp task runs
+get event that after gulp task runs.
 
 ##### Arguments
 
-- callback : function() : コールバック関数
+- callback : function() : callback function
 
 ##### Return
 
-- TaskBuilder : タスクビルダー
+- TaskBuilder : task builder
 
 ### TaskBuilder#watch(patterns : string|array) : TaskBuilder
 
-監視するファイルパターンをGlob形式で指定し、Gulpタスクに関連付けます。
-select watch file pattern by Glob and link it to gulp task
+select watch file pattern by Glob and link it to gulp task.
 
 ##### Arguments
 
-- patterns : string|array : ファイルパターンまたはファイルパターン配列
+- patterns : string|array : file pattern or file pattern array
 
 ##### Return
 
-- TaskBuilder : タスクビルダー
+- TaskBuilder : task builder
 
 ### drinkbar.notify(message : string, title : string) : void
 
-プラットフォームに通知を送ります。
-push notification to platform
+push notification to platform.
 
-同じ内容をコンソールにもログ出力します。
-print message to the console
+print message to the console.
 
 ##### Arguments
 
-- message : string : 通知するメッセージ
-- title : string : メッセージにつけるタイトル
+- message : string : notification message
+- title : string : notification title
 
 ##### Return
 
-ありません。
-none
+none.
 
 ### drinkbar.log(message : string) : void
 
-コンソールにログ出力します。
-print message to the console
+print message to the console.
 
 
-`chalk` ライブラリを使って色をつけることもできます。
-you can set colors by using `chalk` library
+you can set colors by using `chalk` library.
 
 ##### Arguments
 
-- message : string : 出力するメッセージ
+- message : string : output message
 
 ##### Return
 
-ありません。
-none
+none.
 
 
 
-## Author
+## Credits
 
-Jumilla (Fumio Furukawa)
+Jumilla ([https://github.com/jumilla](Fumio Furukawa))
+Yuuki ([https://github.com/yuki332](Yuki Arai))
 
 [MIT](http://spdx.org/licenses/MIT) License.

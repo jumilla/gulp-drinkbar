@@ -808,6 +808,7 @@ Gulpタスク実行後のイベントを受け取ります。
 
 ## Author
 
-[フミリア](https://jumilla.me/about/me)
+フミリア ([https://github.com/jumilla](古川 文生))
+Yuuki ([https://github.com/yuki332](新井 友樹))
 
 [MIT](http://spdx.org/licenses/MIT)ライセンス

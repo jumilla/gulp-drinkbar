@@ -298,7 +298,7 @@ drinkbar
 			'resources/assets/sass/app.scss',
 			'resources/assets/sass/lib.sass',
 		],
-		output: 'public/assets/app.css',
+		output: 'public/assets',
 		config: {
 			autoprefixer: 'last 10 versions',
 		},
@@ -330,7 +330,7 @@ drinkbar
 		inputs: [
 			'resources/assets/less/app.less',
 		],
-		output: 'public/assets/app.css',
+		output: 'public/assets',
 		config: {
 		},
 	})
@@ -695,28 +695,28 @@ drinkbar
 
 ### drinkbar.task(task : string, dependentTasks : array) : TaskBuilder
 
-create task builder.
+Create task builder.
 
 ##### Arguments
 
-- task : string : タスク名
-- dependentTasks : array : 依存タスク名リスト
+- task : string : Task name.
+- dependentTasks : array : Dependent tasks list.
 
 ##### Return
 
-- TaskBuilder : タスクビルダー
+- TaskBuilder : Task Builder.
 
 ### TaskBuilder#{recipe}(...parameters) : TaskBuilder
 
-create gulp task with selected recipes.
+Create gulp task with selected recipes.
 
 ##### Arguments
 
-- parameters : argument array : 引数リスト
+- parameters : argument array : Aruguments list.
 
 ##### Return
 
-- TaskBuilder : タスクビルダー
+- TaskBuilder : Task builder.
 
 ### TaskBuilder#define(closure : function($, builder, ...parameters) = null) : TaskBuilder
 
@@ -724,27 +724,27 @@ Make a Gulp task with the specified logic.
 
 ##### Arguments
 
-- closure : function($, builder, ...parameters) : Definition function
+- closure : function($, builder, ...parameters) : Definition function.
 
 ##### Return
 
-- TaskBuilder : task builder
+- TaskBuilder : Task builder.
 
 ### TaskBuilder#on('before', callback : function) : TaskBuilder
 
-get event that before gulp task runs.
+Get event that before gulp task runs.
 
 ##### Arguments
 
-- callback : function() : callback function
+- callback : function() : Callback function.
 
 ##### Return
 
-- TaskBuilder : task builder
+- TaskBuilder : Task builder.
 
 ### TaskBuilder#on('after', callback : function) : TaskBuilder
 
-get event that after gulp task runs.
+Get event that after gulp task runs.
 
 ##### Arguments
 
@@ -752,49 +752,48 @@ get event that after gulp task runs.
 
 ##### Return
 
-- TaskBuilder : task builder
+- TaskBuilder : Task builder.
 
 ### TaskBuilder#watch(patterns : string|array) : TaskBuilder
 
-select watch file pattern by Glob and link it to gulp task.
+Select watch file pattern by Glob and link it to gulp task.
 
 ##### Arguments
 
-- patterns : string|array : file pattern or file pattern array
+- patterns : string|array : File pattern or file pattern array.
 
 ##### Return
 
-- TaskBuilder : task builder
+- TaskBuilder : Task builder.
 
 ### drinkbar.notify(message : string, title : string) : void
 
-push notification to platform.
+Push notification to platform.
 
-print message to the console.
+Print message to the console.
 
 ##### Arguments
 
-- message : string : notification message
-- title : string : notification title
+- message : string : Notification message.
+- title : string : Notification title.
 
 ##### Return
 
-none.
+None.
 
 ### drinkbar.log(message : string) : void
 
-print message to the console.
+Print message to the console.
 
-
-you can set colors by using `chalk` library.
+You can set colors by using `chalk` library.
 
 ##### Arguments
 
-- message : string : output message
+- message : string : Output message.
 
 ##### Return
 
-none.
+None.
 
 
 

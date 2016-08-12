@@ -300,7 +300,7 @@ drinkbar
 			'resources/assets/sass/app.scss',
 			'resources/assets/sass/lib.sass',
 		],
-		output: 'public/assets/app.css',
+		output: 'public/assets',
 		config: {
 			autoprefixer: 'last 10 versions',
 		},
@@ -333,7 +333,7 @@ drinkbar
 		inputs: [
 			'resources/assets/less/app.less',
 		],
-		output: 'public/assets/app.css',
+		output: 'public/assets',
 		config: {
 		},
 	})
